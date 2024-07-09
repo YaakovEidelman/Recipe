@@ -1,0 +1,62 @@
+Cooking Business
+
+RECIPE INFO
+
+Recipe has a cuisine type and ingredients.
+Each ingredient has a measurement type and amount.
+
+The recipe has a list of ingredients, the ingredients are put in the recipe in a specific order.
+
+There is a list of cuisine which must be approved.
+
+There are directions to each recipe, and the directions have steps.
+Steps have a number.
+
+Need a recipe status. options are 'draft', published, archived. when in draft its not shown on the website.
+Recipe status needs a date created, date published, and when it was archived.
+
+
+
+MEALS INFO
+
+Staff creates meals.
+Meals are given names.
+Meal has one or more courses. 
+There are different course types.
+Each course can have multiple recipes in it.
+The courses have a sequence in the meal.
+
+A course can have unlimited recipes, as long as there are no duplicate course types.
+
+
+COOKBOOK INFO
+
+Cookbook has name, price, and recipes. 
+No meals.
+just recipes, and there is a sequence how they're presented.
+
+Is active or inactive.
+
+
+
+All names of ingredients, meals, recipes, and books are one time only.
+
+
+
+
+PICTURE Schema
+
+All pictures belong to a type.
+i.e. Ingredient, book, recipe, meal.
+
+Picture nameing schema is as follows:
+Name of picture type.
+Name of type subtype.
+
+No spaces or punctuation rather use "-".
+All are .jpeg.
+
+
+STAFF Info
+
+First Name, last name, user name.
