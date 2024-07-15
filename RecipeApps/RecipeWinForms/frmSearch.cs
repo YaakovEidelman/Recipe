@@ -1,5 +1,6 @@
 ﻿using CPUFramework;
 using System.Data;
+using CPUWinFormFramwork;
 
 namespace RecipeWinForms
 {
@@ -10,16 +11,21 @@ namespace RecipeWinForms
             InitializeComponent();
             btnSearch.Click += BtnSearch_Click;
             gRecipe.CellDoubleClick += GRecipe_CellDoubleClick;
-            FormatGrid();
+            btnNew.Click += BtnNew_Click;
+            WinFormsUtility.FormatGridSearchResults(gRecipe);
         }
 
         private void ShowRecipeForm(int rowindex)
         {
-            // In the session he did like this:
-            int id = (int)gRecipe.Rows[rowindex].Cells["RecipeId"].Value;
-            //Why cant you do as follows:
-            //frm.ShowForm(rowindex);
-            //Like this you dont need to get the id in the function you already have it passed into the function
+            int id = 0;
+            if (rowindex > -1)
+            {
+                // In the session he did like this:
+                id = (int)gRecipe.Rows[rowindex].Cells["RecipeId"].Value;
+                //Why cant you do as follows:
+                //frm.ShowForm(rowindex);
+                //Like this you dont need to get the id in the function you already have it passed into the function
+            }
 
             frmRecipe frm = new();
             frm.ShowForm(id);
@@ -31,13 +37,6 @@ namespace RecipeWinForms
             gRecipe.DataSource = dt;
             gRecipe.Columns["recipeid"].Visible = false;
         }
-        private void FormatGrid()
-        {
-            gRecipe.ReadOnly = true;
-            gRecipe.AllowUserToAddRows = false;
-            gRecipe.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            gRecipe.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-        }
 
 
         private void GRecipe_CellDoubleClick(object? sender, DataGridViewCellEventArgs e)
@@ -48,5 +47,10 @@ namespace RecipeWinForms
         {
             SearchForRecipe(txtSearch.Text);
         }
+        private void BtnNew_Click(object? sender, EventArgs e)
+        {
+            ShowRecipeForm(-1);
+        }
+        //End of class
     }
 }

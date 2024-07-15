@@ -34,6 +34,7 @@
             txtSearch = new TextBox();
             btnSearch = new Button();
             gRecipe = new DataGridView();
+            btnNew = new Button();
             tblMain.SuspendLayout();
             tblSearch.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)gRecipe).BeginInit();
@@ -57,18 +58,20 @@
             // tblSearch
             // 
             tblSearch.AutoSize = true;
-            tblSearch.ColumnCount = 3;
+            tblSearch.ColumnCount = 4;
+            tblSearch.ColumnStyles.Add(new ColumnStyle());
             tblSearch.ColumnStyles.Add(new ColumnStyle());
             tblSearch.ColumnStyles.Add(new ColumnStyle());
             tblSearch.ColumnStyles.Add(new ColumnStyle());
             tblSearch.Controls.Add(lblSearch, 0, 0);
             tblSearch.Controls.Add(txtSearch, 1, 0);
             tblSearch.Controls.Add(btnSearch, 2, 0);
+            tblSearch.Controls.Add(btnNew, 3, 0);
             tblSearch.Location = new Point(3, 3);
             tblSearch.Name = "tblSearch";
             tblSearch.RowCount = 1;
             tblSearch.RowStyles.Add(new RowStyle());
-            tblSearch.Size = new Size(400, 40);
+            tblSearch.Size = new Size(518, 40);
             tblSearch.TabIndex = 0;
             // 
             // lblSearch
@@ -110,6 +113,16 @@
             gRecipe.Size = new Size(1022, 423);
             gRecipe.TabIndex = 1;
             // 
+            // btnNew
+            // 
+            btnNew.Dock = DockStyle.Fill;
+            btnNew.Location = new Point(403, 3);
+            btnNew.Name = "btnNew";
+            btnNew.Size = new Size(112, 34);
+            btnNew.TabIndex = 3;
+            btnNew.Text = "New";
+            btnNew.UseVisualStyleBackColor = true;
+            // 
             // frmSearch
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -134,5 +147,6 @@
         private TextBox txtSearch;
         private Button btnSearch;
         private DataGridView gRecipe;
+        private Button btnNew;
     }
 }

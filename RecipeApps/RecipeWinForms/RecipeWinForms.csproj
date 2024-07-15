@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\CPUFramework\CPUFramework.csproj" />
+    <ProjectReference Include="..\..\..\CPUWinFormFramework\CPUWinFormFramwork.csproj" />
   </ItemGroup>
 
 </Project>
