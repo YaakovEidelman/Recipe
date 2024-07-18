@@ -66,8 +66,16 @@ namespace RecipeWinForms
             }
             else
             {
-                sql = "insert recipe(StaffId, CuisineId, RecipeName, Calories, DateDrafted, DatePublished, DateArchived)";
-                sql += $"select '{dr["StaffId"]}', '{dr["CuisineId"]}', '{dr["RecipeName"]}', {dr["Calories"]}, '{dr["DateDrafted"]}', {published}, {archived}";
+                if(txtDateDrafted.Text == "")
+                {
+                    sql = "insert recipe(StaffId, CuisineId, RecipeName, Calories, DatePublished, DateArchived)";
+                    sql += $"select '{dr["StaffId"]}', '{dr["CuisineId"]}', '{dr["RecipeName"]}', {dr["Calories"]}, {published}, {archived}";
+                }
+                else
+                {
+                    sql = "insert recipe(StaffId, CuisineId, RecipeName, Calories, DateDrafted, DatePublished, DateArchived)";
+                    sql += $"select '{dr["StaffId"]}', '{dr["CuisineId"]}', '{dr["RecipeName"]}', {dr["Calories"]}, '{dr["DateDrafted"]}', {published}, {archived}";
+                }
             }
 
             Debug.Print(sql);
