@@ -1,6 +1,4 @@
-﻿using CPUFramework;
-using System.Data;
-using CPUWinFormFramwork;
+﻿using System.Data;
 
 namespace RecipeWinForms
 {
@@ -20,20 +18,14 @@ namespace RecipeWinForms
             int id = 0;
             if (rowindex > -1)
             {
-                // In the session he did like this:
                 id = (int)gRecipe.Rows[rowindex].Cells["RecipeId"].Value;
-                //Why cant you do as follows:
-                //frm.ShowForm(rowindex);
-                //Like this you dont need to get the id in the function you already have it passed into the function
             }
-
             frmRecipe frm = new();
             frm.ShowForm(id);
         }
         private void SearchForRecipe(string recipename)
         {
-            string sql = "select r.recipeid, r.RecipeName, r.Calories, r.RecipeStatus, r.DateDrafted, r.DatePublished, r.DateArchived from Recipe r where r.RecipeName like '%" + recipename + "%'";
-            DataTable dt = SQLUtility.GetDataTable(sql);
+            DataTable dt = Recipe.GetRecipeSearchResults(recipename);
             gRecipe.DataSource = dt;
             gRecipe.Columns["recipeid"].Visible = false;
         }
@@ -41,7 +33,7 @@ namespace RecipeWinForms
 
         private void GRecipe_CellDoubleClick(object? sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex != -1 && e.ColumnIndex != -1)
+            if (e.RowIndex > -1 && e.ColumnIndex != -1)
                 ShowRecipeForm(e.RowIndex);
         }
         private void BtnSearch_Click(object? sender, EventArgs e)

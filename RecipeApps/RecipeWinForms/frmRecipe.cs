@@ -1,7 +1,5 @@
-﻿using CPUFramework;
-using System.Data;
+﻿using System.Data;
 using System.Diagnostics;
-using CPUWinFormFramwork;
 
 namespace RecipeWinForms
 {
@@ -17,18 +15,14 @@ namespace RecipeWinForms
 
         public void ShowForm(int id)
         {
-            string sql = "select r.recipeid, r.StaffId, r.CuisineId, r.RecipeName, r.Calories, r.RecipeStatus, r.DateDrafted, r.DatePublished, r.DateArchived from Recipe r where r.recipeid = " + id;
-            dtrecipe = SQLUtility.GetDataTable(sql);
+            dtrecipe = Recipe.GetSpecificRecipe(id);
             if (id == 0)
             {
                 dtrecipe.Rows.Add();
             }
 
-            DataTable dtstaff = SQLUtility.GetDataTable("select s.StaffId, s.username from Staff s");
-            DataTable dtCuisine = SQLUtility.GetDataTable("select c.CuisineId, c.CuisineType from Cuisine c");
-            WinFormsUtility.SetListBinding(lstUserName, dtstaff, dtrecipe, "StaffId");
-            WinFormsUtility.SetListBinding(lstCuisineType, dtCuisine, dtrecipe, "CuisineId");
-
+            WinFormsUtility.SetListBinding(lstUserName, Recipe.GetStaffTable(), dtrecipe, "StaffId");
+            WinFormsUtility.SetListBinding(lstCuisineType, Recipe.GetCuisineTable(), dtrecipe, "CuisineId");
 
 
             foreach (Control c in tblRecipeMain.Controls)
@@ -45,50 +39,13 @@ namespace RecipeWinForms
 
         private void Save()
         {
-            string sql;
-            DataRow dr = dtrecipe.Rows[0];
-            int id = (int)dr["recipeid"];
-            string published = string.IsNullOrEmpty(dr["DatePublished"].ToString()) ? "null" : $"'{dr["DatePublished"]}'";
-            string archived = string.IsNullOrEmpty(dr["DateArchived"].ToString()) ? "null" : $"'{dr["DateArchived"]}'";
-
-            if (id > 0)
-            {
-                sql = string.Join(
-                    Environment.NewLine,
-                    $"update r set ",
-                    $"r.RecipeName = '{dr["RecipeName"]}',",
-                    $"r.Calories = {dr["Calories"]},",
-                    $"r.DateDrafted = '{dr["DateDrafted"]}',",
-                    $"r.DatePublished = {published},",
-                    $"r.DateArchived = {archived}",
-                    $"from recipe r where r.recipeid = {dr["recipeid"]}"
-                );
-            }
-            else
-            {
-                if(txtDateDrafted.Text == "")
-                {
-                    sql = "insert recipe(StaffId, CuisineId, RecipeName, Calories, DatePublished, DateArchived)";
-                    sql += $"select '{dr["StaffId"]}', '{dr["CuisineId"]}', '{dr["RecipeName"]}', {dr["Calories"]}, {published}, {archived}";
-                }
-                else
-                {
-                    sql = "insert recipe(StaffId, CuisineId, RecipeName, Calories, DateDrafted, DatePublished, DateArchived)";
-                    sql += $"select '{dr["StaffId"]}', '{dr["CuisineId"]}', '{dr["RecipeName"]}', {dr["Calories"]}, '{dr["DateDrafted"]}', {published}, {archived}";
-                }
-            }
-
-            Debug.Print(sql);
-            SQLUtility.ExecuteSQL(sql);
-
+            bool isdatedraftedblank = (txtDateDrafted.Text == "") ? true : false;
+            Recipe.Save(dtrecipe, isdatedraftedblank);
             Close();
         }
         private void Delete()
         {
-            DataRow dr = dtrecipe.Rows[0];
-            int id = (int)dr["RecipeId"];
-            string sql = "delete recipe where recipeid = " + id;
-            SQLUtility.ExecuteSQL(sql);
+            Recipe.Delete(dtrecipe);
             Close();
         }
 
