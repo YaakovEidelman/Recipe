@@ -33,7 +33,7 @@ namespace RecipeTest
 
             r["staffid"] = staffid;
             r["cuisineid"] = cuisineid;
-            r["recipename"] = recipename;
+            r["recipename"] = recipename + " " + DateTime.Now.ToString("HH:mm:ss");
             r["calories"] = calories;
 
             if (drafted == null)
