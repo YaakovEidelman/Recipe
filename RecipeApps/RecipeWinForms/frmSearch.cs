@@ -28,6 +28,8 @@ namespace RecipeWinForms
             DataTable dt = Recipe.GetRecipeSearchResults(recipename);
             gRecipe.DataSource = dt;
             gRecipe.Columns["recipeid"].Visible = false;
+            gRecipe.Columns["StaffId"].Visible = false;
+            gRecipe.Columns["cuisineid"].Visible = false;
         }
 
 

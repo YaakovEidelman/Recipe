@@ -2,13 +2,14 @@ create or alter procedure RecipeGet (@recipeid int = 0, @recipename varchar(25) 
 as 
 begin 
 	select @recipename = nullif(@recipename, '')
-	select r.RecipeId, r.RecipeName, r.Calories, r.RecipeStatus, r.DateDrafted, r.DatePublished, r.DateArchived, r.RecipeImagePath
+	select r.RecipeId, r.StaffId, r.CuisineId, r.RecipeName, r.Calories, r.RecipeStatus, r.DateDrafted, r.DatePublished, r.DateArchived, r.RecipeImagePath
 	from Recipe r
 	where r.RecipeId = @recipeid
 	or @all = 1
 	or r.RecipeName like '%' + @recipename + '%'
 end
 go
+
 
 /*
 exec RecipeGet

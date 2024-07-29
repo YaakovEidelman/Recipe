@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.Data.SqlClient;
 using System.Diagnostics;
 
 namespace RecipeSystem
@@ -7,24 +8,38 @@ namespace RecipeSystem
     {
         public static DataTable GetRecipeSearchResults(string recipename)
         {
-            string sql = "select r.recipeid, r.RecipeName, r.Calories, r.RecipeStatus, r.DateDrafted, r.DatePublished, r.DateArchived from Recipe r where r.RecipeName like '%" + recipename + "%'";
-            return SQLUtility.GetDataTable(sql);
+            DataTable dt = new();
+            SqlCommand cmd = SQLUtility.GetSqlCommand("RecipeGet");
+            cmd.Parameters["@recipename"].Value = recipename;
+            dt = SQLUtility.GetDataTable(cmd);
+            return dt;
         }
 
         public static DataTable GetSpecificRecipe(int id)
         {
-            string sql = "select r.recipeid, r.StaffId, r.CuisineId, r.RecipeName, r.Calories, r.RecipeStatus, r.DateDrafted, r.DatePublished, r.DateArchived from Recipe r where r.recipeid = " + id;
-            return SQLUtility.GetDataTable(sql);
+            DataTable dt = new();
+            SqlCommand cmd = SQLUtility.GetSqlCommand("RecipeGet");
+            cmd.Parameters["@recipeid"].Value = id;
+            dt = SQLUtility.GetDataTable(cmd);
+            return dt;
         }
 
         public static DataTable GetStaffTable()
         {
-            return SQLUtility.GetDataTable("select s.StaffId, s.username from Staff s");
+            DataTable dt = new();
+            SqlCommand cmd = SQLUtility.GetSqlCommand("StaffGet");
+            cmd.Parameters["@all"].Value = 1;
+            dt = SQLUtility.GetDataTable(cmd);
+            return dt;
         }
 
         public static DataTable GetCuisineTable()
         {
-            return SQLUtility.GetDataTable("select c.CuisineId, c.CuisineType from Cuisine c");
+            DataTable dt = new();
+            SqlCommand cmd = SQLUtility.GetSqlCommand("CuisineGet");
+            cmd.Parameters["@all"].Value = 1;
+            dt = SQLUtility.GetDataTable(cmd);
+            return dt;
         }
 
         public static void Save(DataTable dtrecipe, bool isdatedraftedblank)
