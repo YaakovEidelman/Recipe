@@ -1,6 +1,7 @@
 using CPUFramework;
 using RecipeSystem;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace RecipeTest
 {
@@ -85,6 +86,7 @@ namespace RecipeTest
         public void UpdateRecipe(int staffid, int cuisineid, string recipename, int calories, object drafted, object published, object archived)
         {
             DataTable dt = SQLUtility.GetDataTable("select * from recipe where recipename = " + "'" + recipename + "'");
+            Assume.That(dt.Rows.Count > 0, "There are no rows in the table, can't test");
             int id = (int)dt.Rows[0]["recipeid"];
             DataRow r = dt.Rows[0];
 
@@ -133,11 +135,45 @@ namespace RecipeTest
         }
 
         [Test]
+        public void UpdateRecipeCheckException()
+        {
+            DataTable dt = SQLUtility.GetDataTable("select top 1 * from recipe");
+            Assume.That(dt.Rows.Count > 0, "There are no rows in the table, can't run test");
+            int id = (int)dt.Rows[0]["recipeid"];
+            DataRow r = dt.Rows[0];
+            TestContext.WriteLine("Check that when breaking a check constraint it throws an error");
+            TestContext.WriteLine("RecipeName is " + r["recipename"]);
+            TestContext.WriteLine("Try renaming to a blank");
+
+            r["recipename"] = "";
+            Exception ex = Assert.Throws<Exception>(() => Recipe.Save(dt, (r["datedrafted"].ToString() == "") ? true : false));
+            TestContext.WriteLine(ex.Message);
+        }
+
+        [Test]
+        public void UpdateRecipeUniqueException()
+        {
+            DataTable dt = SQLUtility.GetDataTable("select top 2 * from recipe");
+            Assume.That(dt.Rows.Count > 0, "There are no rows in the table, can't run test");
+            int id1 = (int)dt.Rows[0]["recipeid"];
+            int id2 = (int)dt.Rows[1]["recipeid"];
+            DataRow r1 = dt.Rows[0];
+            DataRow r2 = dt.Rows[1];
+            TestContext.WriteLine("Check that when breaking a unique constraint it throws an error");
+            TestContext.WriteLine("RecipeName is " + r1["recipename"]);
+            TestContext.WriteLine("Try renaming " + r1["recipename"] + " to " + r2["recipename"]);
+
+            r1["recipename"] = r2["recipename"];
+            Exception ex = Assert.Throws<Exception>(() => Recipe.Save(dt, (r1["datedrafted"].ToString() == "") ? true : false));
+            TestContext.WriteLine(ex.Message);
+        }
+
+        [Test]
         public void DeleteRecipe()
         {
             DataTable dt = SQLUtility.GetDataTable("select top 1 * from recipe r left join recipeingredient ri on r.recipeid = ri.recipeid where ri.recipeid is null");
             int id = 0;
-            if(dt.Rows.Count > 0)
+            if (dt.Rows.Count > 0)
             {
                 id = (int)dt.Rows[0]["recipeid"];
             }
@@ -147,6 +183,41 @@ namespace RecipeTest
             DataTable dtafterdelete = SQLUtility.GetDataTable("select * from recipe where recipeid = " + id);
             Assert.IsTrue(dtafterdelete.Rows.Count == 0, "Was not able to delete the recipe");
             TestContext.WriteLine("Successfully deleted recipe with the id of " + id);
+        }
+
+        [Test]
+        public void DeleteRecipeForeignKeyException()
+        {
+            DataTable dt = SQLUtility.GetDataTable("select top 1 r.recipeid from recipe r left join recipeingredient ri on r.recipeid = ri.recipeid where ri.recipeid is not null");
+            int id = 0;
+            if (dt.Rows.Count > 0)
+            {
+                id = (int)dt.Rows[0]["recipeid"];
+            }
+            Assume.That(id > 0, "there is no data in the row, can't run test");
+            TestContext.WriteLine("Check that an exception is thrown when trying to delete a recipe with related tables");
+            TestContext.WriteLine("Trying to delete recipe with recipeid of " + id);
+            Exception ex = Assert.Throws<Exception>(() => Recipe.Delete(dt));
+            TestContext.WriteLine(ex.Message);
+
+            SqlCommand cmd = SQLUtility.GetSqlCommand("RecipeGet");
+            cmd.Parameters["@recipeid"].Value = id;
+            DataTable newdt = SQLUtility.GetDataTable(cmd);
+            TestContext.WriteLine("The recipeid with an id of " + newdt.Rows[0]["recipeid"] + " still exists");
+        }
+
+        public static string GetFirstColumnFirstRowValueAsString(string sql)
+        {
+            string val = "";
+            DataTable dt = SQLUtility.GetDataTable(sql);
+            if(dt.Rows.Count > 0 && dt.Columns.Count > 0)
+            {
+                if (dt.Rows[0][0] != DBNull.Value)
+                {
+                    val = dt.Rows[0][0].ToString();
+                }
+            }
+            return val;
         }
 
         //End of class

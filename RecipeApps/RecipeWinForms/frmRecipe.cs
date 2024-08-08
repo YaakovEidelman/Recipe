@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using CPUFramework;
+using System.Data;
 using System.Diagnostics;
 
 namespace RecipeWinForms
@@ -39,14 +40,38 @@ namespace RecipeWinForms
 
         private void Save()
         {
-            bool isdatedraftedblank = (txtDateDrafted.Text == "") ? true : false;
-            Recipe.Save(dtrecipe, isdatedraftedblank);
-            Close();
+            Application.UseWaitCursor = true;
+            try
+            {
+                bool isdatedraftedblank = (txtDateDrafted.Text == "") ? true : false;
+                Recipe.Save(dtrecipe, isdatedraftedblank);
+                Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "RecipeApp");
+            }
+            finally
+            {
+                Application.UseWaitCursor = false;
+            }
         }
         private void Delete()
         {
-            Recipe.Delete(dtrecipe);
-            Close();
+            Application.UseWaitCursor = true;
+            try
+            {
+                Recipe.Delete(dtrecipe);
+                Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "RecipeApp");
+            }
+            finally
+            {
+                Application.UseWaitCursor = false;
+            }
         }
 
         private void BtnDelete_Click(object? sender, EventArgs e)
