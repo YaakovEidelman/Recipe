@@ -1,4 +1,4 @@
-use HeartyHearthDB
+--use HeartyHearthDB
 delete CookBookRecipe
 delete CookBook
 delete MealCourseRecipe
@@ -240,14 +240,12 @@ on c.CourseType = x.CourseType
     union select 'Breakfast Bash', 'Main Course', 'Butter Muffins', 0
     union select 'Breakfast Bash', 'Appetizer', 'Apple Yogurt Smoothie', 1
     union select 'Ultimate Dinner', 'Appetizer', 'Butter Muffins', 1
-    union select 'Ultimate Dinner', 'Main Course', 'Matzah Balls', 1
     union select 'Ultimate Dinner', 'Main Course', 'Tomato Salad', 0
     union select 'Ultimate Dinner', 'Dessert', 'Chocolate Chip Cookies', 1
     union select 'Homestyle Supper', 'Main Course', 'Pound Cake', 0
     union select 'Homestyle Supper', 'Main Course', 'Apple Yogurt Smoothie', 0
     union select 'Homestyle Supper', 'Main Course', 'Cheese Bread', 1
     union select 'Midday Munch', 'Appetizer', 'Tomato Salad', 1
-    union select 'Midday Munch', 'Main Course', 'Matzah Balls', 1
     union select 'Midday Munch', 'Main Course', 'Chocolate Chip Cookies', 0
 )
 insert MealCourseRecipe(MealCourseId, RecipeId, IsMain)
@@ -277,7 +275,6 @@ union select (select StaffId from Staff where UserName = 'liv_martinez'), 'Quick
     union select 'Treats for Two', 'Cheese Bread', 3
     union select 'Treats for Two', 'Butter Muffins', 4
     union select 'Family Favorites Cookbook', 'Tomato Salad', 1
-    union select 'Family Favorites Cookbook', 'Matzah Balls', 2
     union select 'Family Favorites Cookbook', 'Pound Cake', 3
     union select 'Flavorful Favorites', 'Apple Yogurt Smoothie', 1
     union select 'Flavorful Favorites', 'Tomato Salad', 2
@@ -285,7 +282,6 @@ union select (select StaffId from Staff where UserName = 'liv_martinez'), 'Quick
     union select 'Quick and Easy Recipes', 'Butter Muffins', 1
     union select 'Quick and Easy Recipes', 'Apple Yogurt Smoothie', 2
     union select 'Quick and Easy Recipes', 'Tomato Salad', 3
-    union select 'Quick and Easy Recipes', 'Matzah Balls', 4
     union select 'Quick and Easy Recipes', 'Cheese Bread', 5
 )
 insert CookBookRecipe(CookBookId, RecipeId, RecipeSequence)

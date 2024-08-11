@@ -1,5 +1,3 @@
-delete Recipe
-
 insert Recipe (StaffId, CuisineId, RecipeName, Calories, DateDrafted, DatePublished, DateArchived)
 select 1, 1, 'Pancakes', 150, '01/28/2023', null, null
 union select 2, 2, 'Chocalate cake', 250, '05/14/2023', '06/18/2024', '07/13/2024'

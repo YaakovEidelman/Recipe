@@ -84,8 +84,9 @@ namespace RecipeSystem
         {
             DataRow dr = dtrecipe.Rows[0];
             int id = (int)dr["RecipeId"];
-            string sql = "delete recipe where recipeid = " + id;
-            SQLUtility.ExecuteSQL(sql);
+            SqlCommand cmd = SQLUtility.GetSqlCommand("RecipeDelete");
+            cmd.Parameters["@recipeid"].Value = id;
+            SQLUtility.ExecuteSQL(cmd);
         }
 
         //End of class

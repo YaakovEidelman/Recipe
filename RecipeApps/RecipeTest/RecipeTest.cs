@@ -31,10 +31,11 @@ namespace RecipeTest
             DataRow r = dt.Rows.Add();
 
             TestContext.WriteLine("Check if we can insert a recipe");
+            string newrecipename = recipename + " " + DateTime.Now.ToString("HH:mm:ss");
 
             r["staffid"] = staffid;
             r["cuisineid"] = cuisineid;
-            r["recipename"] = recipename + " " + DateTime.Now.ToString("HH:mm:ss");
+            r["recipename"] = newrecipename; // + " " + DateTime.Now.ToString("HH:mm:ss");
             r["calories"] = calories;
 
             if (drafted == null)
@@ -58,7 +59,7 @@ namespace RecipeTest
             Recipe.Save(dt, isdatedraftedblank);
 
             TestContext.WriteLine("The new recipe name is " + recipename);
-            DataTable newrecipetable = SQLUtility.GetDataTable("select r.recipeid from recipe r where r.recipename = " + "'" + recipename + "'");
+            DataTable newrecipetable = SQLUtility.GetDataTable("select r.recipeid from recipe r where r.recipename = " + "'" + newrecipename + "'");
             int newrecipeid = (int)newrecipetable.Rows[0][0];
             Assert.IsTrue(newrecipeid > 0, "Inserting recipe was unsuccessful");
             TestContext.WriteLine("Successfully inserted a new recipe: " + recipename);
@@ -85,7 +86,7 @@ namespace RecipeTest
         [TestCase(2, 7, "Cro-cro", 15, "2022-1-2", null, null)]
         public void UpdateRecipe(int staffid, int cuisineid, string recipename, int calories, object drafted, object published, object archived)
         {
-            DataTable dt = SQLUtility.GetDataTable("select * from recipe where recipename = " + "'" + recipename + "'");
+            DataTable dt = SQLUtility.GetDataTable("select top 1 * from recipe where recipename like " + "'%" + recipename + "%'");
             Assume.That(dt.Rows.Count > 0, "There are no rows in the table, can't test");
             int id = (int)dt.Rows[0]["recipeid"];
             DataRow r = dt.Rows[0];
