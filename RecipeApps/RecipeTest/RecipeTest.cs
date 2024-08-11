@@ -187,6 +187,27 @@ namespace RecipeTest
         }
 
         [Test]
+        public void DeleteRecipeCheckForbussinessRule()
+        {
+            string sql = @"
+select * 
+from Recipe r 
+where r.RecipeStatus in ('Published')
+or datediff(day, r.DateArchived, current_timestamp) < 30";
+            DataTable dt = SQLUtility.GetDataTable(sql);
+            int id = 0;
+            if (dt.Rows.Count > 0)
+            {
+                id = (int)dt.Rows[0]["recipeid"];
+            }
+            Assume.That(id > 0, "No eligable recipes in db, cannot check for bussiness rule");
+            TestContext.WriteLine("Check that the app prevents deleting recipe with a bussiness rule");
+            TestContext.WriteLine("Trying to delete recipe with an id of " + id);
+            Exception ex = Assert.Throws<Exception>(() => Recipe.Delete(dt));
+            TestContext.WriteLine(ex.Message);
+        }
+
+        [Test]
         public void DeleteRecipeForeignKeyException()
         {
             DataTable dt = SQLUtility.GetDataTable("select top 1 r.recipeid from recipe r left join recipeingredient ri on r.recipeid = ri.recipeid where ri.recipeid is not null");
@@ -211,7 +232,7 @@ namespace RecipeTest
         {
             string val = "";
             DataTable dt = SQLUtility.GetDataTable(sql);
-            if(dt.Rows.Count > 0 && dt.Columns.Count > 0)
+            if (dt.Rows.Count > 0 && dt.Columns.Count > 0)
             {
                 if (dt.Rows[0][0] != DBNull.Value)
                 {
