@@ -1,12 +1,11 @@
-﻿using CPUFramework;
-using System.Data;
-using System.Diagnostics;
+﻿using System.Data;
 
 namespace RecipeWinForms
 {
     public partial class frmRecipe : Form
     {
         DataTable dtrecipe = new();
+        BindingSource bc = new();
         public frmRecipe()
         {
             InitializeComponent();
@@ -17,6 +16,7 @@ namespace RecipeWinForms
         public void ShowForm(int id)
         {
             dtrecipe = Recipe.GetSpecificRecipe(id);
+            bc.DataSource = dtrecipe;
             if (id == 0)
             {
                 dtrecipe.Rows.Add();
@@ -31,7 +31,7 @@ namespace RecipeWinForms
                 switch (c)
                 {
                     case TextBox:
-                        WinFormsUtility.SetControlBinding(c, dtrecipe);
+                        WinFormsUtility.SetControlBinding(c, bc);
                         break;
                 }
             }
@@ -45,6 +45,7 @@ namespace RecipeWinForms
             {
                 bool isdatedraftedblank = (txtDateDrafted.Text == "") ? true : false;
                 Recipe.Save(dtrecipe, isdatedraftedblank);
+                bc.ResetBindings(false);
                 Close();
             }
             catch (Exception ex)

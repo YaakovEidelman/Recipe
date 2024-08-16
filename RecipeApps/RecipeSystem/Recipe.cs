@@ -1,6 +1,5 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
-using System.Diagnostics;
 
 namespace RecipeSystem
 {
@@ -44,41 +43,9 @@ namespace RecipeSystem
 
         public static void Save(DataTable dtrecipe, bool isdatedraftedblank)
         {
-            string sql;
+            //string sql;
             DataRow dr = dtrecipe.Rows[0];
-            int id = (int)dr["recipeid"];
-            string published = string.IsNullOrEmpty(dr["DatePublished"].ToString()) ? "null" : $"'{dr["DatePublished"]}'";
-            string archived = string.IsNullOrEmpty(dr["DateArchived"].ToString()) ? "null" : $"'{dr["DateArchived"]}'";
-
-            if (id > 0)
-            {
-                sql = string.Join(
-                    Environment.NewLine,
-                    $"update r set ",
-                    $"r.RecipeName = '{dr["RecipeName"]}',",
-                    $"r.Calories = {dr["Calories"]},",
-                    $"r.DateDrafted = '{dr["DateDrafted"]}',",
-                    $"r.DatePublished = {published},",
-                    $"r.DateArchived = {archived}",
-                    $"from recipe r where r.recipeid = {dr["recipeid"]}"
-                );
-            }
-            else
-            {
-                if (isdatedraftedblank)
-                {
-                    sql = "insert recipe(StaffId, CuisineId, RecipeName, Calories, DatePublished, DateArchived)";
-                    sql += $"select '{dr["StaffId"]}', '{dr["CuisineId"]}', '{dr["RecipeName"]}', {dr["Calories"]}, {published}, {archived}";
-                }
-                else
-                {
-                    sql = "insert recipe(StaffId, CuisineId, RecipeName, Calories, DateDrafted, DatePublished, DateArchived)";
-                    sql += $"select '{dr["StaffId"]}', '{dr["CuisineId"]}', '{dr["RecipeName"]}', {dr["Calories"]}, '{dr["DateDrafted"]}', {published}, {archived}";
-                }
-            }
-
-            Debug.Print(sql);
-            SQLUtility.ExecuteSQL(sql);
+            SQLUtility.SaveDataRow(dr, "RecipeUpsert");
         }
         public static void Delete(DataTable dtrecipe)
         {

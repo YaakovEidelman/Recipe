@@ -5,7 +5,7 @@ or (r.RecipeStatus = 'Archived' and datediff(day, r.DateArchived, current_timest
 
 select * 
 from Recipe r 
-where r.RecipeStatus in ('Published')
+where r.RecipeStatus = 'Published'
 or datediff(day, r.DateArchived, current_timestamp) < 30
 
 declare @return int, @message varchar(500)
