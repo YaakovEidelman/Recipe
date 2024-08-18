@@ -21,16 +21,18 @@ begin
 
         select @RecipeId = scope_identity()
     end
-
-    update r
-    set 
-        StaffId = @StaffId, 
-        CuisineId = @CuisineId, 
-        RecipeName = @RecipeName, 
-        Calories = @Calories, 
-        DateDrafted = @DateDrafted, 
-        DatePublished = @DatePublished, 
-        DateArchived = @DateArchived
-    from Recipe r
-    where r.RecipeId = @RecipeId
+    else 
+    begin
+        update r
+        set 
+            StaffId = @StaffId, 
+            CuisineId = @CuisineId, 
+            RecipeName = @RecipeName, 
+            Calories = @Calories, 
+            DateDrafted = @DateDrafted, 
+            DatePublished = @DatePublished, 
+            DateArchived = @DateArchived
+        from Recipe r
+        where r.RecipeId = @RecipeId
+    end
 end
