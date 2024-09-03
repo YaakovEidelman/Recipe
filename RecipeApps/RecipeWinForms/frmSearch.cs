@@ -10,7 +10,6 @@ namespace RecipeWinForms
             btnSearch.Click += BtnSearch_Click;
             gRecipe.CellDoubleClick += GRecipe_CellDoubleClick;
             btnNew.Click += BtnNew_Click;
-            WinFormsUtility.FormatGridSearchResults(gRecipe);
         }
 
         private void ShowRecipeForm(int rowindex)
@@ -27,9 +26,7 @@ namespace RecipeWinForms
         {
             DataTable dt = Recipe.GetRecipeSearchResults(recipename);
             gRecipe.DataSource = dt;
-            gRecipe.Columns["recipeid"].Visible = false;
-            gRecipe.Columns["StaffId"].Visible = false;
-            gRecipe.Columns["cuisineid"].Visible = false;
+            WinFormsUtility.FormatGridSearchResults(gRecipe, "Recipe");
         }
 
 

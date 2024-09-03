@@ -22,8 +22,8 @@ namespace RecipeWinForms
                 dtrecipe.Rows.Add();
             }
 
-            WinFormsUtility.SetListBinding(lstUserName, Recipe.GetStaffTable(), dtrecipe, "StaffId");
-            WinFormsUtility.SetListBinding(lstCuisineType, Recipe.GetCuisineTable(), dtrecipe, "CuisineId");
+            WinFormsUtility.SetListBinding(lstUserName, Recipe.GetStaffTable(), dtrecipe, "Staff");
+            WinFormsUtility.SetListBinding(lstCuisineType, Recipe.GetCuisineTable(), dtrecipe, "Cuisine");
 
 
             foreach (Control c in tblRecipeMain.Controls)

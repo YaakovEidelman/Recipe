@@ -12,7 +12,7 @@ create or alter procedure RecipeUpsert
 as 
 begin
 
-    select @DateDrafted = isnull(@DateDrafted, current_timestamp)
+    select @RecipeId = isnull(@RecipeId, 0), @DateDrafted = isnull(@DateDrafted, current_timestamp), @DatePublished = isnull(@DatePublished, 0), @DateArchived = isnull(@DateArchived, 0)
 
     if @RecipeId = 0
     begin 

@@ -5,15 +5,13 @@ begin
     declare @cal int = 0
 
     select @cal = sum(r.Calories) 
-    from Meal m 
-    join MealCourse mc 
-    on m.MealId = mc.MealId
+    from  MealCourse mc 
     join MealCourseRecipe mcr 
     on mc.MealCourseId = mcr.MealCourseId
     join Recipe r 
     on mcr.RecipeId = r.RecipeId
-    where m.MealId = @MealId
-    group by m.MealId
+    where mc.MealId = @MealId
+    group by mc.MealId
 
     return @cal
 end

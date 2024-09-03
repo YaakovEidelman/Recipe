@@ -43,7 +43,6 @@ namespace RecipeSystem
 
         public static void Save(DataTable dtrecipe, bool isdatedraftedblank)
         {
-            //string sql;
             DataRow dr = dtrecipe.Rows[0];
             SQLUtility.SaveDataRow(dr, "RecipeUpsert");
         }
