@@ -1,10 +1,16 @@
 create or alter procedure RecipeDelete (
-    @recipeid int, 
-    @message varchar(500) = '' output
+    @RecipeId int, 
+    @Message varchar(500) = '' output
 )
 as
 begin
     declare @return int = 0
+    select @RecipeId = isnull(@RecipeId, 0)
+    if not exists (select * from Recipe where RecipeId = @RecipeId)
+    begin
+        select @return = 1, @Message = 'This record doesn''t exist.'
+        goto finish
+    end
     if exists(select * from Recipe r where r.RecipeId = @recipeid and (r.RecipeStatus = 'Published' or datediff(day, r.DateArchived, current_timestamp) < 30))
     begin
         select @return = 1, @message = 'Cannot delete: Recipe is either published or not archived for 30 days.'
@@ -18,7 +24,8 @@ begin
         commit
     end try
     begin catch
-        rollback;
+        rollback
+        select @return = 1, @Message = 'There was an error deleting records.';
         throw
     end catch
 

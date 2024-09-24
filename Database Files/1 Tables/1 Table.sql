@@ -61,7 +61,7 @@ create table dbo.Recipe(
         constraint f_Recipe_StaffId foreign key references Staff(StaffId),
     CuisineId int not null 
         constraint f_Recipe_Cuisine foreign key references Cuisine(CuisineId),
-    RecipeName varchar(25) not null 
+    RecipeName varchar(50) not null 
         constraint c_Recipe_RecipeName_Cannot_Be_Blank check(RecipeName <> '')
         constraint u_Recipe_RecipeName_Must_Be_Unique unique,
     Calories int not null
@@ -81,7 +81,7 @@ create table dbo.Recipe(
         constraint c_Recipe_DateArchived_Cannot_Be_Future_Date check(DateArchived <= getdate()),
     RecipeImagePath as concat('Recipe_', replace(RecipeName, ' ', '_'), '.jpeg'),
     constraint c_DatePulished_Must_Be_After_DateDrafted_and_DateArchived_Must_Be_After_DatePublished 
-        check(DatePublished > DateDrafted and DateArchived > isnull(DatePublished, DateDrafted))
+        check(DatePublished >= DateDrafted and DateArchived >= isnull(DatePublished, DateDrafted))
 )
 
 

@@ -22,7 +22,7 @@ namespace RecipeWinForms
                 "MultipleActiveResultSets=False;Encrypt=True;" +
                 "TrustServerCertificate=False;Connection Timeout=30;"
             );
-            Application.Run(new frmSearch());
+            Application.Run(new frmMain());
         }
     }
 }

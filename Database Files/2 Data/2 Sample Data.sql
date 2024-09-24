@@ -241,6 +241,7 @@ on c.CourseType = x.CourseType
     union select 'Breakfast Bash', 'Appetizer', 'Apple Yogurt Smoothie', 1
     union select 'Ultimate Dinner', 'Appetizer', 'Butter Muffins', 1
     union select 'Ultimate Dinner', 'Main Course', 'Tomato Salad', 0
+    union select 'Ultimate Dinner', 'Main Course', 'Pound Cake', 1
     union select 'Ultimate Dinner', 'Dessert', 'Chocolate Chip Cookies', 1
     union select 'Homestyle Supper', 'Main Course', 'Pound Cake', 0
     union select 'Homestyle Supper', 'Main Course', 'Apple Yogurt Smoothie', 0

@@ -1,25 +1,23 @@
-create or alter procedure RecipeGet (@recipeid int = 0, @recipename varchar(25) = '', @all bit = 0)
+create or alter procedure RecipeGet (
+	@RecipeId int = 0, 
+	@RecipeName varchar(25) = '', 
+	@All bit = 0
+)
 as 
 begin 
-	select @recipename = nullif(@recipename, '')
-	select r.RecipeId, r.StaffId, r.CuisineId, r.RecipeName, r.Calories, r.RecipeStatus, r.DateDrafted, r.DatePublished, r.DateArchived, r.RecipeImagePath
+	select @RecipeName = nullif(@RecipeName, '')
+	select r.RecipeId, r.StaffId, r.CuisineId, r.RecipeName, r.RecipeStatus, Username = concat(s.FirstName, ' ', s.LastName),  r.Calories, r.DateDrafted, r.DatePublished, r.DateArchived, r.RecipeImagePath, NumIngredients = count(ri.RecipeIngredientId)
 	from Recipe r
-	where r.RecipeId = @recipeid
-	or @all = 1
-	or r.RecipeName like '%' + @recipename + '%'
+	join Staff s 
+	on r.StaffId = s.StaffId
+	left join RecipeIngredient ri 
+    on ri.RecipeId = r.RecipeId
+	where r.RecipeId = @RecipeId
+	or @All = 1
+	or r.RecipeName like '%' + @RecipeName + '%'
+	group by r.RecipeId, r.StaffId, r.CuisineId, r.RecipeName, r.RecipeStatus, s.FirstName, s.LastName, r.Calories, r.DateDrafted, r.DatePublished, r.DateArchived, r.RecipeImagePath
+	union select 0, 0, 0, '', '', '', null, null, null, null, null, null
+	where @RecipeId = 0
+	order by r.RecipeStatus desc
 end
 go
-
-
-/*
-exec RecipeGet
-
-exec RecipeGet @all = 1
-
-exec RecipeGet @recipename = 'p'
-
-declare @recipeid int
-select top 1 @recipeid = r.recipeid 
-from recipe r
-exec RecipeGet @recipeid = @recipeid
-*/

@@ -5,6 +5,9 @@ namespace RecipeSystem
 {
     public class Recipe
     {
+        // NOTE: THIS IS FROM THE PREVIOUS HOMEWORK FOR THE SEARCH FORM. SINCE THERE IS NO SEARCH FORM IN SESSION 26 PROJECT, I AM MAKING A NEW RECPE MIDDLE TIER BECAUSE I DON'T WANT
+        // TO RUIN THE SEARCH FORM CODE. 
+        // THE RECIPE CLASS I'M GOING TO USE WILL BE CALLED RECIPEPROJECT.cs
         public static DataTable GetRecipeSearchResults(string recipename)
         {
             DataTable dt = new();
@@ -26,7 +29,7 @@ namespace RecipeSystem
         public static DataTable GetStaffTable()
         {
             DataTable dt = new();
-            SqlCommand cmd = SQLUtility.GetSqlCommand("StaffGet");
+            SqlCommand cmd = SQLUtility.GetSqlCommand("StaffListGet");
             cmd.Parameters["@all"].Value = 1;
             dt = SQLUtility.GetDataTable(cmd);
             return dt;
@@ -54,7 +57,6 @@ namespace RecipeSystem
             cmd.Parameters["@recipeid"].Value = id;
             SQLUtility.ExecuteSQL(cmd);
         }
-
         //End of class
     }
 }
