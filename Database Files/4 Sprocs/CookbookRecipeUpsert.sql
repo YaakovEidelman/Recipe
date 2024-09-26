@@ -1,3 +1,4 @@
+--AS Keep to the same naming convention you did for the rest of the sprocs: CookbookRecipeUpdate
 create or alter proc dbo.CookbookRecipeUpsert(
     @CookbookRecipeId int = 0 output,
     @CookbookId int,

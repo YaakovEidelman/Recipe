@@ -1,3 +1,4 @@
+--AS Keep to the same naming convention: RecipeDirectionUpdate
 create or alter procedure RecipeDirectionSave(
     @RecipeDirectionId int = 0 output,
     @RecipeId int,

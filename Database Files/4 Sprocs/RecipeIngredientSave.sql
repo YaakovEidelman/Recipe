@@ -1,3 +1,4 @@
+--AS Keep to the same naming convention: RecipeIngredintUpdate
 create or alter proc RecipeIngredientSave(
     @RecipeIngredientId int = 0 output,
     @RecipeId int,

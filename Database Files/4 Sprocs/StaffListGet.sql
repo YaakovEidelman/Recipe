@@ -1,4 +1,6 @@
+--AS Try combining with StaffGet
 create or alter procedure StaffListGet(
+--AS Parameters should be Propercase
 	@staffid int = 0, 
 	@username varchar(25) = '', 
 	@all bit = 0,
