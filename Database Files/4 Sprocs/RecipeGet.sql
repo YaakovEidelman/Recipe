@@ -6,7 +6,22 @@ create or alter procedure RecipeGet (
 as 
 begin 
 	select @RecipeName = nullif(@RecipeName, '')
-	select r.RecipeId, r.StaffId, r.CuisineId, r.RecipeName, r.RecipeStatus, Username = concat(s.FirstName, ' ', s.LastName),  r.Calories, r.DateDrafted, r.DatePublished, r.DateArchived, r.RecipeImagePath, NumIngredients = count(ri.RecipeIngredientId)
+	select 
+		r.RecipeId, 
+		r.StaffId, 
+		r.CuisineId, 
+		r.RecipeName, 
+		r.RecipeStatus, 
+		Username = concat(s.FirstName, ' ', s.LastName),  
+		r.Calories, 
+		-- DateDrafted = cast(r.DateDrafted as date),
+		-- DatePublished = cast(r.DatePublished as date), 
+		-- DateArchived = cast(r.DateArchived as date), 
+		r.DateDrafted,
+		r.DatePublished, 
+		r.DateArchived, 
+		r.RecipeImagePath, 
+		NumIngredients = count(ri.RecipeIngredientId)
 	from Recipe r
 	join Staff s 
 	on r.StaffId = s.StaffId
