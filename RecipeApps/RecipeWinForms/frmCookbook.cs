@@ -36,7 +36,7 @@ namespace RecipeWinForms
             //}
 
             WinFormsUtility.SetControlBinding(txtCookbookName, bs);
-            WinFormsUtility.SetListBinding(lstUserName, RecipeProject.GetAnyDataTable("StaffListGet", ("@All", 1), ("@InsertBlank", 1)), dtcookbook, "Staff");
+            WinFormsUtility.SetListBinding(lstUserName, RecipeProject.GetAnyDataTable("StaffListGet", ("@All", 1)), dtcookbook, "Staff");
             WinFormsUtility.SetControlBinding(txtPrice, bs);
             WinFormsUtility.SetControlBinding(txtDateCreated, bs);
             WinFormsUtility.SetControlBinding(chkIsActive, bs);

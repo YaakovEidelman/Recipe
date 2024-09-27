@@ -36,8 +36,8 @@
             WinFormsUtility.SetControlBinding(txtDateDrafted, bs);
             WinFormsUtility.SetControlBinding(txtDateArchived, bs);
             WinFormsUtility.SetControlBinding(txtDatePublished, bs);
-            DataTable dtstaff = RecipeProject.GetAnyDataTable("StaffListGet", ("@All", 1), ("@InsertBlank", 1));
-            DataTable dtcuisine = RecipeProject.GetAnyDataTable("CuisineGet", ("@All", 1), ("@InsertBlank", 1));
+            DataTable dtstaff = RecipeProject.GetAnyDataTable("StaffListGet", ("@All", 1));
+            DataTable dtcuisine = RecipeProject.GetAnyDataTable("CuisineGet", ("@All", 1));
             WinFormsUtility.SetListBinding(lstUserName, dtstaff, dtRecipe, "Staff");
             WinFormsUtility.SetListBinding(lstCuisineType, dtcuisine, dtRecipe, "Cuisine");
 
@@ -64,7 +64,7 @@
             gIngredients.Columns.Clear();
             gIngredients.DataSource = dtRecipeIngredientsList;
             WinFormsUtility.AddComboBoxToGrid(gIngredients, RecipeProject.GetAnyDataTable("MeasurementGet", ("@InsertBlank", 1)), "Measurement", "MeasurementType");
-            WinFormsUtility.AddComboBoxToGrid(gIngredients, RecipeProject.GetAnyDataTable("IngredientGet", ("@InsertBlank", 1)), "Ingredient", "IngredientName");
+            WinFormsUtility.AddComboBoxToGrid(gIngredients, RecipeProject.GetAnyDataTable("IngredientGet"), "Ingredient", "IngredientName");
             WinFormsUtility.AddDeleteButtonToGrid(gIngredients, "Delete");
             WinFormsUtility.FormatGridForEdit(gIngredients, "");
 
