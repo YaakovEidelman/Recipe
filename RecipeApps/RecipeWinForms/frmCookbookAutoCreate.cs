@@ -6,7 +6,7 @@
         {
             InitializeComponent();
             btnCreateCookbook.Click += BtnCreateCookbook_Click;
-            WinFormsUtility.SetListBinding(lstUserName, RecipeProject.GetAnyDataTable("StaffListGet", ("@All", 1), ("@InsertBlank", 1)), null, "Staff");
+            WinFormsUtility.SetListBinding(lstUserName, RecipeProject.GetAnyDataTable("StaffListGet", ("@All", 1)), null, "Staff");
         }
 
         private void AutoCreate()
