@@ -86,7 +86,7 @@
                     newfrm.WindowState = FormWindowState.Maximized;
                     newfrm.FormClosed += Newfrm_FormClosed;
                     newfrm.TextChanged += Newfrm_TextChanged;
-                    if (frmtype != typeof(frmRecipeUpdated) && frmtype != typeof(frmChangeStatus) && frmtype != typeof(frmCookbook))
+                    if (frmtype != typeof(frmChangeStatus))
                     {
                         newfrm.Show();
                     }
