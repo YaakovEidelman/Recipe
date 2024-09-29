@@ -43,13 +43,13 @@
             txtDateCreated = new TextBox();
             lblActive = new Label();
             chkIsActive = new CheckBox();
-            tableLayoutPanel1 = new TableLayoutPanel();
+            tblSubGrid = new TableLayoutPanel();
             btnSaveRecipes = new Button();
             gCookbookRecipes = new DataGridView();
             tblMain.SuspendLayout();
             tblCookbookInfo.SuspendLayout();
             tblDateCreated.SuspendLayout();
-            tableLayoutPanel1.SuspendLayout();
+            tblSubGrid.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)gCookbookRecipes).BeginInit();
             SuspendLayout();
             // 
@@ -58,14 +58,14 @@
             tblMain.ColumnCount = 1;
             tblMain.ColumnStyles.Add(new ColumnStyle());
             tblMain.Controls.Add(tblCookbookInfo, 0, 0);
-            tblMain.Controls.Add(tableLayoutPanel1, 0, 1);
+            tblMain.Controls.Add(tblSubGrid, 0, 1);
             tblMain.Dock = DockStyle.Fill;
             tblMain.Location = new Point(0, 0);
             tblMain.Name = "tblMain";
             tblMain.RowCount = 2;
             tblMain.RowStyles.Add(new RowStyle());
             tblMain.RowStyles.Add(new RowStyle());
-            tblMain.Size = new Size(859, 831);
+            tblMain.Size = new Size(863, 548);
             tblMain.TabIndex = 0;
             // 
             // tblCookbookInfo
@@ -94,7 +94,7 @@
             tblCookbookInfo.RowStyles.Add(new RowStyle());
             tblCookbookInfo.RowStyles.Add(new RowStyle());
             tblCookbookInfo.RowStyles.Add(new RowStyle());
-            tblCookbookInfo.Size = new Size(853, 234);
+            tblCookbookInfo.Size = new Size(857, 234);
             tblCookbookInfo.TabIndex = 0;
             // 
             // btnSave
@@ -134,7 +134,7 @@
             tblCookbookInfo.SetColumnSpan(txtCookbookName, 2);
             txtCookbookName.Location = new Point(157, 43);
             txtCookbookName.Name = "txtCookbookName";
-            txtCookbookName.Size = new Size(693, 31);
+            txtCookbookName.Size = new Size(697, 31);
             txtCookbookName.TabIndex = 3;
             // 
             // lblUserName
@@ -155,7 +155,7 @@
             lstUserName.FormattingEnabled = true;
             lstUserName.Location = new Point(157, 80);
             lstUserName.Name = "lstUserName";
-            lstUserName.Size = new Size(693, 33);
+            lstUserName.Size = new Size(697, 33);
             lstUserName.TabIndex = 5;
             // 
             // lblPrice
@@ -189,7 +189,7 @@
             tblDateCreated.RowCount = 2;
             tblDateCreated.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tblDateCreated.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tblDateCreated.Size = new Size(409, 67);
+            tblDateCreated.Size = new Size(413, 67);
             tblDateCreated.TabIndex = 8;
             // 
             // lblDateCreated
@@ -198,7 +198,7 @@
             lblDateCreated.AutoSize = true;
             lblDateCreated.Location = new Point(3, 4);
             lblDateCreated.Name = "lblDateCreated";
-            lblDateCreated.Size = new Size(403, 25);
+            lblDateCreated.Size = new Size(407, 25);
             lblDateCreated.TabIndex = 0;
             lblDateCreated.Text = "Date Created:";
             lblDateCreated.TextAlign = ContentAlignment.MiddleCenter;
@@ -209,7 +209,7 @@
             txtDateCreated.Enabled = false;
             txtDateCreated.Location = new Point(3, 36);
             txtDateCreated.Name = "txtDateCreated";
-            txtDateCreated.Size = new Size(403, 31);
+            txtDateCreated.Size = new Size(407, 31);
             txtDateCreated.TabIndex = 1;
             // 
             // lblActive
@@ -233,20 +233,20 @@
             chkIsActive.TabIndex = 10;
             chkIsActive.UseVisualStyleBackColor = true;
             // 
-            // tableLayoutPanel1
+            // tblSubGrid
             // 
-            tableLayoutPanel1.ColumnCount = 1;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Controls.Add(btnSaveRecipes, 0, 0);
-            tableLayoutPanel1.Controls.Add(gCookbookRecipes, 0, 1);
-            tableLayoutPanel1.Dock = DockStyle.Fill;
-            tableLayoutPanel1.Location = new Point(3, 243);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 2;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle());
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(853, 585);
-            tableLayoutPanel1.TabIndex = 1;
+            tblSubGrid.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            tblSubGrid.ColumnCount = 1;
+            tblSubGrid.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tblSubGrid.Controls.Add(btnSaveRecipes, 0, 0);
+            tblSubGrid.Controls.Add(gCookbookRecipes, 0, 1);
+            tblSubGrid.Location = new Point(3, 243);
+            tblSubGrid.Name = "tblSubGrid";
+            tblSubGrid.RowCount = 2;
+            tblSubGrid.RowStyles.Add(new RowStyle());
+            tblSubGrid.RowStyles.Add(new RowStyle());
+            tblSubGrid.Size = new Size(857, 302);
+            tblSubGrid.TabIndex = 1;
             // 
             // btnSaveRecipes
             // 
@@ -266,7 +266,7 @@
             gCookbookRecipes.Name = "gCookbookRecipes";
             gCookbookRecipes.RowHeadersWidth = 62;
             gCookbookRecipes.RowTemplate.Height = 33;
-            gCookbookRecipes.Size = new Size(847, 538);
+            gCookbookRecipes.Size = new Size(851, 255);
             gCookbookRecipes.StandardTab = true;
             gCookbookRecipes.TabIndex = 1;
             // 
@@ -274,7 +274,7 @@
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(859, 831);
+            ClientSize = new Size(863, 548);
             Controls.Add(tblMain);
             Name = "frmCookbook";
             Text = "Cookbook";
@@ -283,8 +283,8 @@
             tblCookbookInfo.PerformLayout();
             tblDateCreated.ResumeLayout(false);
             tblDateCreated.PerformLayout();
-            tableLayoutPanel1.ResumeLayout(false);
-            tableLayoutPanel1.PerformLayout();
+            tblSubGrid.ResumeLayout(false);
+            tblSubGrid.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)gCookbookRecipes).EndInit();
             ResumeLayout(false);
         }
@@ -306,7 +306,7 @@
         private TextBox txtDateCreated;
         private Label lblActive;
         private CheckBox chkIsActive;
-        private TableLayoutPanel tableLayoutPanel1;
+        private TableLayoutPanel tblSubGrid;
         private Button btnSaveRecipes;
         private DataGridView gCookbookRecipes;
     }
