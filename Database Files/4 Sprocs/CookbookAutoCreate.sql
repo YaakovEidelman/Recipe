@@ -1,4 +1,5 @@
 create or alter procedure dbo.CookbookAutoCreate(
+    @CookbookId int = 0 output,
     @StaffId int = 0
 )
 as
@@ -13,7 +14,7 @@ begin
             where r.StaffId = @StaffId
             group by s.StaffId, s.FirstName, s.LastName
 
-            declare @CookbookId int = scope_identity()
+            select @CookbookId = scope_identity()
 
             insert CookBookRecipe(CookBookId, RecipeId, RecipeSequence)
             select @CookbookId, r.RecipeId, row_number() over (order by r.RecipeName)

@@ -14,7 +14,9 @@
             Cursor = Cursors.WaitCursor;
             try
             {
-                RecipeProject.AutoCreate(WinFormsUtility.GetIdFromComboBox(lstUserName));
+                int newcookbookid = RecipeProject.AutoCreate(WinFormsUtility.GetIdFromComboBox(lstUserName));
+                ((frmMain)this.MdiParent).OpenForm(typeof(frmCookbook), newcookbookid);
+                Close();
             }
             catch (Exception ex)
             {

@@ -72,11 +72,20 @@
             return id;
         }
 
-        public static void AutoCreate(int id)
+        public static int AutoCreate(int id)
         {
             SqlCommand cmd = SQLUtility.GetSqlCommand("CookbookAutoCreate");
             SQLUtility.SetParamValue(cmd, "@StaffId", id);
             SQLUtility.ExecuteSQL(cmd);
+
+
+            int newcookbookid = 0;
+            if (cmd.Parameters.Contains("@CookbookId") && cmd.Parameters["@CookbookId"].Direction == ParameterDirection.InputOutput)
+            {
+                newcookbookid = (int)cmd.Parameters["@CookbookId"].Value;
+            }
+
+            return newcookbookid;
         }
 
         // End of Class
