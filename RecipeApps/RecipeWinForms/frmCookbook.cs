@@ -152,7 +152,7 @@ namespace RecipeWinForms
             {
                 Cursor = Cursors.Default;
             }
-            
+
         }
 
         private void PromptUserBeforeClosing(FormClosingEventArgs e)
@@ -203,7 +203,7 @@ namespace RecipeWinForms
 
         private void GCookbookRecipes_CellContentClick(object? sender, DataGridViewCellEventArgs e)
         {
-            if(e.ColumnIndex >= 0 && e.RowIndex >= 0)
+            if (e.ColumnIndex >= 0 && e.RowIndex >= 0)
             {
                 if (gCookbookRecipes.Columns[e.ColumnIndex] is DataGridViewButtonColumn)
                 {
