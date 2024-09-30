@@ -17,6 +17,7 @@ namespace RecipeWinForms
             btnSave.Click += BtnSave_Click;
             btnDelete.Click += BtnDelete_Click;
             btnSaveRecipes.Click += BtnSaveRecipes_Click;
+            txtPrice.TextChanged += TxtPrice_TextChanged;
             gCookbookRecipes.CellContentClick += GCookbookRecipes_CellContentClick;
             this.FormClosing += FrmCookbook_FormClosing;
             this.Shown += FrmCookbook_Shown;
@@ -199,6 +200,14 @@ namespace RecipeWinForms
         private void BtnSaveRecipes_Click(object? sender, EventArgs e)
         {
             SaveRecipes();
+        }
+
+        private void TxtPrice_TextChanged(object? sender, EventArgs e)
+        {
+            if (sender is TextBox && sender != null)
+            {
+                WinFormsUtility.ReplaceLettersWithBlanks((TextBox)sender);
+            }
         }
 
         private void GCookbookRecipes_CellContentClick(object? sender, DataGridViewCellEventArgs e)

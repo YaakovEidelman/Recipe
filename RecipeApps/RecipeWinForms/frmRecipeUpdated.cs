@@ -16,6 +16,7 @@
             btnChangeStatus.Click += BtnChangeStatus_Click;
             btnIngredientSave.Click += BtnIngredientSave_Click;
             btnStepsSave.Click += BtnStepsSave_Click;
+            txtCalories.TextChanged += TxtCalories_TextChanged;
             this.Activated += FrmRecipeUpdated_Activated;
             this.Shown += FrmRecipeUpdated_Shown;
             this.FormClosing += FrmRecipeUpdated_FormClosing;
@@ -265,6 +266,14 @@
         private void BtnStepsSave_Click(object? sender, EventArgs e)
         {
             RecipeStepsSave();
+        }
+
+        private void TxtCalories_TextChanged(object? sender, EventArgs e)
+        {
+            if (sender is TextBox && sender != null)
+            {
+                WinFormsUtility.ReplaceLettersWithBlanks((TextBox)sender, false);
+            }
         }
 
         private void FrmRecipeUpdated_Shown(object? sender, EventArgs e)
