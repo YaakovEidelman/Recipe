@@ -1,5 +1,6 @@
 --AS Keep to the same naming convention: CookbookUpdate
-create or alter proc dbo.CookbookSave(
+-- Completed
+create or alter proc dbo.CookbookUpdate(
     @CookbookId int = 0 output,
     @StaffId int,
     @CookbookName varchar(50),

@@ -80,7 +80,7 @@ namespace RecipeWinForms
             Cursor = Cursors.WaitCursor;
             try
             {
-                RecipeProject.Save(dtcookbook, "CookbookSave");
+                RecipeProject.Save(dtcookbook, "CookbookUpdate");
                 issaved = true;
                 cookbookid = (int)dtcookbook.Rows[0]["CookbookId"];
                 UpdateDeleteAndRecipeSaveButton();
