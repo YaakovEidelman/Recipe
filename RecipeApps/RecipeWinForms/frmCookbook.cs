@@ -50,7 +50,7 @@ namespace RecipeWinForms
         private void SetupCookbookRecipesTable()
         {
             dtcookbookrecipes = RecipeProject.GetAnyDataTable("CookbookRecipeGet", ("@CookbookId", cookbookid));
-            dtrecipe = RecipeProject.GetAnyDataTable("RecipeGetForCookbookDropdown");
+            dtrecipe = RecipeProject.GetAnyDataTable("RecipeGet", ("@IsRecipeGet", 2));
             gCookbookRecipes.Columns.Clear();
             gCookbookRecipes.DataSource = dtcookbookrecipes;
             WinFormsUtility.AddComboBoxToGrid(gCookbookRecipes, dtrecipe, "Recipe", "RecipeName");

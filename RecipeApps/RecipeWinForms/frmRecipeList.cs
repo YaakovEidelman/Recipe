@@ -19,7 +19,7 @@
 
         private void SetupDataTable()
         {
-            dtrecipelist = RecipeProject.GetAnyDataTable("RecipeListGet");
+            dtrecipelist = RecipeProject.GetAnyDataTable("RecipeGet", ("@IsRecipeGet", 1));
             gRecipeList.DataSource = dtrecipelist;
         }
 

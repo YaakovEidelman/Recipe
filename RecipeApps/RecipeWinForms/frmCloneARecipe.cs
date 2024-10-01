@@ -6,7 +6,7 @@
         public frmCloneARecipe()
         {
             InitializeComponent();
-            dtRecipe = RecipeProject.GetAnyDataTable("RecipeGetForCookbookDropdown");
+            dtRecipe = RecipeProject.GetAnyDataTable("RecipeGet", ("@IsRecipeGet", 2));
             WinFormsUtility.SetListBinding(lstRecipeName, dtRecipe, null, "Recipe");
             btnClone.Click += BtnClone_Click;
         }
