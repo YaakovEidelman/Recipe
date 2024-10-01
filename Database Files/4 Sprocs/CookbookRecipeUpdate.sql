@@ -1,5 +1,6 @@
 --AS Keep to the same naming convention you did for the rest of the sprocs: CookbookRecipeUpdate
-create or alter proc dbo.CookbookRecipeUpsert(
+-- Completed
+create or alter proc dbo.CookbookRecipeUpdate(
     @CookbookRecipeId int = 0 output,
     @CookbookId int,
     @RecipeId int,

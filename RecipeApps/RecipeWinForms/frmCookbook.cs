@@ -124,7 +124,7 @@ namespace RecipeWinForms
             Cursor = Cursors.WaitCursor;
             try
             {
-                RecipeProject.SaveSubTable(dtcookbookrecipes, cookbookid, "CookbookRecipeUpsert", "CookbookId");
+                RecipeProject.SaveSubTable(dtcookbookrecipes, cookbookid, "CookbookRecipeUpdate", "CookbookId");
             }
             catch (Exception ex)
             {
