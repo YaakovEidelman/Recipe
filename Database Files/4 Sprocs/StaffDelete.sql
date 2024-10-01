@@ -20,6 +20,7 @@ begin
             on ri.RecipeId = r.RecipeId
             where r.StaffId = @StaffId
 
+--AS Nice!
             delete mcr 
             from MealCourseRecipe mcr
             join MealCourse mc

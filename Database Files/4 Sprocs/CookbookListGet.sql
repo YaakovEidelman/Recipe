@@ -1,3 +1,4 @@
+--AS Try combining this sproc with CookbookGet
 create or alter proc dbo.CookbookListGet
 as 
 begin

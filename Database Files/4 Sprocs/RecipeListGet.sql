@@ -1,3 +1,4 @@
+--AS Try combining with RecipeGet sproc
 create or alter proc dbo.RecipeListGet
 as 
 begin

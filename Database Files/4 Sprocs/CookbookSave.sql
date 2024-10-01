@@ -1,3 +1,4 @@
+--AS Keep to the same naming convention: CookbookUpdate
 create or alter proc dbo.CookbookSave(
     @CookbookId int = 0 output,
     @StaffId int,

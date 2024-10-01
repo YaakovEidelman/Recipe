@@ -1,3 +1,4 @@
+--AS Try combining this with RecipeGet
 create or alter proc dbo.RecipeGetForCookbookDropdown
 as
 begin

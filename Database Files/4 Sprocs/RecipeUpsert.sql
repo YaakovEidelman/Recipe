@@ -1,3 +1,4 @@
+--AS Keep to the same naming convention: RecipeUpdate
 create or alter procedure RecipeUpsert 
 (
     @RecipeId int output,
