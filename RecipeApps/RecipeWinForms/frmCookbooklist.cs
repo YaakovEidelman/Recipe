@@ -14,7 +14,7 @@
 
         private void SetupTable()
         {
-            dtCookbookList = RecipeProject.GetAnyDataTable("CookbookListGet");
+            dtCookbookList = RecipeProject.GetAnyDataTable("CookbookGet", ("@All", 1));
             gCookbooks.DataSource = dtCookbookList;
             WinFormsUtility.FormatGridSearchResults(gCookbooks, "Cookbook");
         }

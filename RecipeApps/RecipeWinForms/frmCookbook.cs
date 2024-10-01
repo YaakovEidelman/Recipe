@@ -27,7 +27,7 @@ namespace RecipeWinForms
         public void ShowCookbookForm(int id)
         {
             cookbookid = id;
-            dtcookbook = RecipeProject.GetAnyDataTable("CookbookGet", ("@CookbookId", id));
+            dtcookbook = RecipeProject.GetAnyDataTable("CookbookGet", ("@CookbookId", id), ("@All", 0));
             bs.DataSource = dtcookbook;
 
             //Instead of adding in a row here, I put it in the sproc which I think makes more sense, since adding a row is technically SQL.
