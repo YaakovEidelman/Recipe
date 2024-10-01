@@ -225,11 +225,13 @@
 
         private void UpdateStatusFields()
         {
-            DataTable newrecipe = RecipeProject.GetAnyDataTable("RecipeGet", ("@RecipeId", recipeid));
-            txtRecipeStatus.Text = (string)newrecipe.Rows[0]["RecipeStatus"];
-            txtDateDrafted.Text = newrecipe.Rows[0]["DateDrafted"].ToString();
-            txtDatePublished.Text = newrecipe.Rows[0]["DatePublished"].ToString();
-            txtDateArchived.Text = newrecipe.Rows[0]["DateArchived"].ToString();
+            dtRecipe = RecipeProject.GetAnyDataTable("RecipeGet", ("@RecipeId", recipeid));
+            bs.DataSource = dtRecipe;
+            //DataTable newrecipe = RecipeProject.GetAnyDataTable("RecipeGet", ("@RecipeId", recipeid));
+            //txtRecipeStatus.Text = (string)newrecipe.Rows[0]["RecipeStatus"];
+            //txtDateDrafted.Text = newrecipe.Rows[0]["DateDrafted"].ToString();
+            //txtDatePublished.Text = newrecipe.Rows[0]["DatePublished"].ToString();
+            //txtDateArchived.Text = newrecipe.Rows[0]["DateArchived"].ToString();
         }
 
 
