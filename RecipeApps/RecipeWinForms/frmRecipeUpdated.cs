@@ -39,8 +39,8 @@
             WinFormsUtility.SetControlBinding(txtDatePublished, bs);
             DataTable dtstaff = RecipeProject.GetAnyDataTable("StaffListGet", ("@All", 1));
             DataTable dtcuisine = RecipeProject.GetAnyDataTable("CuisineGet", ("@All", 1));
-            WinFormsUtility.SetListBinding(lstUserName, dtstaff, dtRecipe, "Staff");
-            WinFormsUtility.SetListBinding(lstCuisineType, dtcuisine, dtRecipe, "Cuisine");
+            WinFormsUtility.SetListBindingWithSource(lstUserName, dtstaff, bs, "Staff");
+            WinFormsUtility.SetListBindingWithSource(lstCuisineType, dtcuisine, bs, "Cuisine");
 
 
             this.Text = UpdateTabText();
@@ -227,11 +227,6 @@
         {
             dtRecipe = RecipeProject.GetAnyDataTable("RecipeGet", ("@RecipeId", recipeid));
             bs.DataSource = dtRecipe;
-            //DataTable newrecipe = RecipeProject.GetAnyDataTable("RecipeGet", ("@RecipeId", recipeid));
-            //txtRecipeStatus.Text = (string)newrecipe.Rows[0]["RecipeStatus"];
-            //txtDateDrafted.Text = newrecipe.Rows[0]["DateDrafted"].ToString();
-            //txtDatePublished.Text = newrecipe.Rows[0]["DatePublished"].ToString();
-            //txtDateArchived.Text = newrecipe.Rows[0]["DateArchived"].ToString();
         }
 
 
