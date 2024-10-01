@@ -19,7 +19,7 @@ namespace RecipeWinForms
         private void SetupGrid(SelectedOption tableenum)
         {
             so = tableenum;
-            dt = RecipeProject.GetAnyDataTable(so + "Get", ("@All", 1));
+            dt = RecipeProject.GetAnyDataTable(so + "Get", ("@All", 1), ("@IsDataMaint", 1));
             gData.Columns.Clear();
             gData.DataSource = dt;
             WinFormsUtility.FormatGridForEdit(gData, so.ToString());

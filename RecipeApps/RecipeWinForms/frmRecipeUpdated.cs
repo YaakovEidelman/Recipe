@@ -37,7 +37,7 @@
             WinFormsUtility.SetControlBinding(lblDateDrafted, bs);
             WinFormsUtility.SetControlBinding(lblDateArchived, bs);
             WinFormsUtility.SetControlBinding(lblDatePublished, bs);
-            DataTable dtstaff = RecipeProject.GetAnyDataTable("StaffListGet", ("@All", 1));
+            DataTable dtstaff = RecipeProject.GetAnyDataTable("StaffGet", ("@All", 1));
             DataTable dtcuisine = RecipeProject.GetAnyDataTable("CuisineGet", ("@All", 1));
             WinFormsUtility.SetListBindingWithSource(lstUserName, dtstaff, bs, "Staff");
             WinFormsUtility.SetListBindingWithSource(lstCuisineType, dtcuisine, bs, "Cuisine");
