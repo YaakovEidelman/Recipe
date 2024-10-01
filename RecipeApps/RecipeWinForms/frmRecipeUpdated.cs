@@ -95,7 +95,7 @@
             Cursor = Cursors.WaitCursor;
             try
             {
-                RecipeProject.Save(dtRecipe, "RecipeUpsert");
+                RecipeProject.Save(dtRecipe, "RecipeUpdate");
                 recipeid = (int)dtRecipe.Rows[0]["RecipeId"];
                 issaved = true;
                 EnableDisableButtons();
@@ -139,7 +139,7 @@
             Cursor = Cursors.WaitCursor;
             try
             {
-                RecipeProject.SaveSubTable(dtRecipeIngredientsList, recipeid, "RecipeIngredientSave", "RecipeId");
+                RecipeProject.SaveSubTable(dtRecipeIngredientsList, recipeid, "RecipeIngredientUpdate", "RecipeId");
             }
             catch (Exception ex)
             {
@@ -156,7 +156,7 @@
             Cursor = Cursors.WaitCursor;
             try
             {
-                RecipeProject.SaveSubTable(dtRecipeStepsList, recipeid, "RecipeDirectionSave", "RecipeId");
+                RecipeProject.SaveSubTable(dtRecipeStepsList, recipeid, "RecipeDirectionUpdate", "RecipeId");
             }
             catch (Exception ex)
             {

@@ -1,5 +1,5 @@
 --AS Keep to the same naming convention: RecipeUpdate
-create or alter procedure RecipeUpsert 
+create or alter procedure RecipeUpdate
 (
     @RecipeId int output,
     @StaffId int,
@@ -44,4 +44,3 @@ begin
         throw
     end catch
 end
-

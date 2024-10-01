@@ -22,10 +22,6 @@ namespace RecipeWinForms
             dt = RecipeProject.GetAnyDataTable(so + "Get", ("@All", 1));
             gData.Columns.Clear();
             gData.DataSource = dt;
-            if (gData.Columns.Contains("o"))
-            {
-                gData.Columns.Remove("o");
-            }
             WinFormsUtility.FormatGridForEdit(gData, so.ToString());
             WinFormsUtility.AddDeleteButtonToGrid(gData, "Delete");
         }

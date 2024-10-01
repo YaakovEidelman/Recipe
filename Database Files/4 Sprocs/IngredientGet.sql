@@ -3,10 +3,10 @@ create or alter proc IngredientGet(
 )
 as
 begin 
-    select i.IngredientId, i.IngredientName, o = 1
+    select i.IngredientId, i.IngredientName
     from Ingredient i
-    union select 0, ' ', 0
+    union select 0, ' '
     where @InsertBlank = 1
-    order by o, i.IngredientName
+    order by i.IngredientName
 end
 go

@@ -54,7 +54,7 @@
             Cursor = Cursors.WaitCursor;
             try
             {
-                RecipeProject.Save(dtRecipeTable, "RecipeUpsert");
+                RecipeProject.Save(dtRecipeTable, "RecipeUpdate");
             }
             catch (Exception ex)
             {

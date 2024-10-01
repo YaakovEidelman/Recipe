@@ -3,10 +3,10 @@ create or alter proc MeasurementGet(
 )
 as
 begin 
-    select m.MeasurementId, m.MeasurementType, o = 1
+    select m.MeasurementId, m.MeasurementType
     from Measurement m
-    union select 0, ' ', 0
+    union select 0, ' '
     where @InsertBlank = 1
-    order by o, m.MeasurementType
+    order by m.MeasurementType
 end
 go
