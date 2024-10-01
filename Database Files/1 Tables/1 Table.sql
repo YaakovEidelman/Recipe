@@ -73,11 +73,11 @@ create table dbo.Recipe(
                             then 'Published'
                         else 'Archived'
                      end,
-    DateDrafted datetime not null default getdate()
+    DateDrafted date not null default getdate()
         constraint c_Recipe_DateDrafted_Cannot_Be_Future_Date check(DateDrafted <= getdate()),
-    DatePublished datetime null
+    DatePublished date null
         constraint c_Recipe_DatePublished_Cannot_Be_Future_Date check(DatePublished <= getdate()),
-    DateArchived datetime null
+    DateArchived date null
         constraint c_Recipe_DateArchived_Cannot_Be_Future_Date check(DateArchived <= getdate()),
     RecipeImagePath as concat('Recipe_', replace(RecipeName, ' ', '_'), '.jpeg'),
     constraint c_DatePulished_Must_Be_After_DateDrafted_and_DateArchived_Must_Be_After_DatePublished 

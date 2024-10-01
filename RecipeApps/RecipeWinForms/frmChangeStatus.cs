@@ -28,9 +28,9 @@
                 recipename = (string)dtRecipeTable.Rows[0]["RecipeName"];
                 WinFormsUtility.SetControlBinding(lblRecipeName, bs);
                 WinFormsUtility.SetControlBinding(lblRecipeStatus, bs);
-                WinFormsUtility.SetControlBinding(txtDateDrafted, bs);
-                WinFormsUtility.SetControlBinding(txtDatePublished, bs);
-                WinFormsUtility.SetControlBinding(txtDateArchived, bs);
+                WinFormsUtility.SetControlBinding(lblDateDrafted, bs);
+                WinFormsUtility.SetControlBinding(lblDatePublished, bs);
+                WinFormsUtility.SetControlBinding(lblDateArchived, bs);
             }
 
             this.Text = recipename + " - Change Status";

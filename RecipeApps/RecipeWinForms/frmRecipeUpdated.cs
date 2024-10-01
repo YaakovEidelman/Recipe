@@ -32,15 +32,16 @@
             SetupRecipeDataTable();
 
             WinFormsUtility.SetControlBinding(txtRecipeName, bs);
-            WinFormsUtility.SetControlBinding(txtRecipeStatus, bs);
+            WinFormsUtility.SetControlBinding(lblRecipeStatus, bs);
             WinFormsUtility.SetControlBinding(txtCalories, bs);
-            WinFormsUtility.SetControlBinding(txtDateDrafted, bs);
-            WinFormsUtility.SetControlBinding(txtDateArchived, bs);
-            WinFormsUtility.SetControlBinding(txtDatePublished, bs);
+            WinFormsUtility.SetControlBinding(lblDateDrafted, bs);
+            WinFormsUtility.SetControlBinding(lblDateArchived, bs);
+            WinFormsUtility.SetControlBinding(lblDatePublished, bs);
             DataTable dtstaff = RecipeProject.GetAnyDataTable("StaffListGet", ("@All", 1));
             DataTable dtcuisine = RecipeProject.GetAnyDataTable("CuisineGet", ("@All", 1));
             WinFormsUtility.SetListBindingWithSource(lstUserName, dtstaff, bs, "Staff");
             WinFormsUtility.SetListBindingWithSource(lstCuisineType, dtcuisine, bs, "Cuisine");
+
 
 
             this.Text = UpdateTabText();
@@ -228,7 +229,6 @@
             dtRecipe = RecipeProject.GetAnyDataTable("RecipeGet", ("@RecipeId", recipeid));
             bs.DataSource = dtRecipe;
         }
-
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
         private void FrmRecipeUpdated_Activated(object? sender, EventArgs e)

@@ -7,14 +7,14 @@ create or alter procedure RecipeUpsert
     @RecipeName varchar(25) output,
     @Calories int,
     @RecipeStatus varchar(9) = '' output,
-    @DateDrafted datetime output,
-    @DatePublished datetime output,
-    @DateArchived datetime output
+    @DateDrafted date output,
+    @DatePublished date output,
+    @DateArchived date output
 )
 as 
 begin
 
-    select @RecipeId = isnull(@RecipeId, 0), @DateDrafted = isnull(@DateDrafted, cast(sysdatetimeoffset() at time zone 'Eastern Standard Time' as datetime)), @DatePublished = nullif(@DatePublished, ''), @DateArchived = nullif(@DateArchived, '')
+    select @RecipeId = isnull(@RecipeId, 0), @DateDrafted = isnull(@DateDrafted, cast(sysdatetimeoffset() at time zone 'Eastern Standard Time' as date)), @DatePublished = nullif(@DatePublished, ''), @DateArchived = nullif(@DateArchived, '')
 
     begin try
         if @RecipeId = 0
