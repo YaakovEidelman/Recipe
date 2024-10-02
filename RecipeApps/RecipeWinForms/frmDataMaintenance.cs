@@ -13,6 +13,7 @@ namespace RecipeWinForms
             InitializeComponent();
             btnSave.Click += BtnSave_Click;
             gData.CellContentClick += GData_CellContentClick;
+            gData.DataError += GData_DataError;
             SetupRadioButtons();
         }
 
@@ -126,6 +127,15 @@ namespace RecipeWinForms
                 {
                     Delete(e.RowIndex);
                 }
+            }
+        }
+
+        private void GData_DataError(object? sender, DataGridViewDataErrorEventArgs e)
+        {
+            if (gData.EditingControl != null && gData.EditingControl is TextBox)
+            {
+                TextBox tb = (TextBox)gData.EditingControl;
+                WinFormsUtility.ReplaceLettersWithBlanks(tb, false);
             }
         }
 

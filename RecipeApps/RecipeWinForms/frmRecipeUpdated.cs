@@ -22,6 +22,8 @@
             this.FormClosing += FrmRecipeUpdated_FormClosing;
             gIngredients.CellContentClick += GIngredients_CellContentClick;
             gSteps.CellContentClick += GSteps_CellContentClick;
+            gIngredients.DataError += GIngredients_DataError;
+            gSteps.DataError += GSteps_DataError;
             btn = new List<Button> { btnDelete, btnChangeStatus, btnIngredientSave, btnStepsSave };
         }
 
@@ -304,6 +306,24 @@
         private void FrmRecipeUpdated_FormClosing(object? sender, FormClosingEventArgs e)
         {
             PromptUserToSaveForm(e);
+        }
+
+        private void GSteps_DataError(object? sender, DataGridViewDataErrorEventArgs e)
+        {
+            if (gSteps.EditingControl != null && gSteps.EditingControl is TextBox)
+            {
+                TextBox tb = (TextBox)gSteps.EditingControl;
+                WinFormsUtility.ReplaceLettersWithBlanks(tb, false);
+            }
+        }
+
+        private void GIngredients_DataError(object? sender, DataGridViewDataErrorEventArgs e)
+        {
+            if (gIngredients.EditingControl != null && gIngredients.EditingControl is TextBox)
+            {
+                TextBox tb = (TextBox)gIngredients.EditingControl;
+                WinFormsUtility.ReplaceLettersWithBlanks(tb, false);
+            }
         }
 
         // End of Class

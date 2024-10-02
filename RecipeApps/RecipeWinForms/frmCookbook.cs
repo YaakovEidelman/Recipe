@@ -21,6 +21,9 @@ namespace RecipeWinForms
             gCookbookRecipes.CellContentClick += GCookbookRecipes_CellContentClick;
             this.FormClosing += FrmCookbook_FormClosing;
             this.Shown += FrmCookbook_Shown;
+
+            gCookbookRecipes.DataError += GCookbookRecipes_DataError;
+
             btn = new() { btnDelete, btnSaveRecipes };
         }
 
@@ -224,6 +227,15 @@ namespace RecipeWinForms
         private void FrmCookbook_FormClosing(object? sender, FormClosingEventArgs e)
         {
             PromptUserBeforeClosing(e);
+        }
+
+        private void GCookbookRecipes_DataError(object? sender, DataGridViewDataErrorEventArgs e)
+        {
+            if (gCookbookRecipes.EditingControl != null && gCookbookRecipes.EditingControl is TextBox)
+            {
+                TextBox tb = (TextBox)gCookbookRecipes.EditingControl;
+                WinFormsUtility.ReplaceLettersWithBlanks(tb, false);
+            }
         }
     }
 }
