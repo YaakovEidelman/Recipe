@@ -7,10 +7,26 @@ begin
     declare @return int = 0
     select @IngredientId = isnull(@IngredientId, 0)
     begin try
-        delete Ingredient where IngredientId = @IngredientId
+        begin transaction
+            declare @RecipeIds table (RecipeId int)
+
+            insert @RecipeIds(RecipeId)
+            select distinct RecipeId
+            from RecipeIngredient
+            where IngredientId = @IngredientId
+
+            delete RecipeIngredient where RecipeId in (select RecipeId from @RecipeIds)
+            delete RecipeDirection where RecipeId in (select RecipeId from @RecipeIds)
+            delete MealCourseRecipe where RecipeId in (select RecipeId from @RecipeIds)
+            delete CookbookRecipe where RecipeId in (select RecipeId from @RecipeIds)
+            delete Recipe where RecipeId in (select RecipeId from @RecipeIds)
+
+            delete Ingredient where IngredientId = @IngredientId
+        commit
     end try
     begin catch
-        select @return = 1, @Message = 'There was an error deleting record.';
+        select @return = 1, @Message = 'There was an error deleting record.'
+        rollback;
         throw
     end catch
 end

@@ -7,10 +7,22 @@ begin
     declare @return int = 0
     select @CourseId = isnull(@CourseId, 0)
     begin try
-    delete Course where CourseId = @CourseId
+        begin tran
+
+            delete mcr 
+            from MealCourseRecipe mcr 
+            join MealCourse mc 
+            on mc.MealCourseId = mcr.MealCourseId
+            where CourseId = @CourseId
+            
+            delete MealCourse where CourseId = @CourseId
+
+            delete Course where CourseId = @CourseId
+        commit
     end try
     begin catch
-        select @return = 1, @Message = 'There was an error deleting record.';
+        select @return = 1, @Message = 'There was an error deleting record.'
+        rollback;
         throw
     end catch
 end

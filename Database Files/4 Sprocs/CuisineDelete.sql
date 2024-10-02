@@ -8,32 +8,19 @@ begin
     select @CuisineId = isnull(@CuisineId, 0)
     begin try
         begin tran
-        
-            -- delete mcr 
-            -- from MealCourseRecipe mcr 
-            -- join Recipe r 
-            -- on mcr.RecipeId = r.RecipeId
-            -- where r.CuisineId = @CuisineId
 
-            -- delete cr 
-            -- from CookBookRecipe cr 
-            -- join Recipe r 
-            -- on cr.RecipeId = r.RecipeId
-            -- where r.CuisineId = @CuisineId
+            declare @RecipeIds table (RecipeId int)
 
-            -- delete ri 
-            -- from RecipeIngredient ri 
-            -- join Recipe r 
-            -- on ri.RecipeId = r.RecipeId
-            -- where r.CuisineId = @CuisineId
+            insert @RecipeIds(RecipeId)
+            select distinct RecipeId
+            from Recipe 
+            where CuisineId = @CuisineId
 
-            -- delete rd 
-            -- from RecipeDirection rd 
-            -- join Recipe r 
-            -- on r.RecipeId = rd.RecipeId
-            -- where r.CuisineId = @CuisineId
-            
-            -- delete Recipe where CuisineId = @CuisineId
+            delete RecipeIngredient where RecipeId in (select RecipeId from @RecipeIds)
+            delete RecipeDirection where RecipeId in (select RecipeId from @RecipeIds)
+            delete MealCourseRecipe where RecipeId in (select RecipeId from @RecipeIds)
+            delete CookbookRecipe where RecipeId in (select RecipeId from @RecipeIds)
+            delete Recipe where RecipeId in (select RecipeId from @RecipeIds)
 
             delete Cuisine where CuisineId = @CuisineId
         commit
