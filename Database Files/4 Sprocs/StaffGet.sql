@@ -1,8 +1,4 @@
---AS Try combining with StaffGet
--- Completed
 create or alter procedure StaffGet(
---AS Parameters should be Propercase
--- Completed
 	@StaffId int = 0, 
 	@Username varchar(25) = '', 
 	@All bit = 0,
