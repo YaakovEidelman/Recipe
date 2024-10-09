@@ -47,7 +47,7 @@ namespace RecipeSystem
         public static void Save(DataTable dtrecipe, bool isdatedraftedblank)
         {
             DataRow dr = dtrecipe.Rows[0];
-            SQLUtility.SaveDataRow(dr, "RecipeUpsert");
+            SQLUtility.SaveDataRow(dr, "RecipeUpdate");
         }
         public static void Delete(DataTable dtrecipe)
         {

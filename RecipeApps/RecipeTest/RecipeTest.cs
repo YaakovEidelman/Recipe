@@ -1,5 +1,6 @@
 using CPUFramework;
 using RecipeSystem;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -7,17 +8,12 @@ namespace RecipeTest
 {
     public class Tests
     {
+        string testconn = ConfigurationManager.ConnectionStrings["unittestconn"].ConnectionString;
+        //string devconn = ConfigurationManager.ConnectionStrings["devconn"].ConnectionString;
         [SetUp]
         public void Setup()
         {
-            DBManager.SetConnString(
-                "Server=tcp:cpucodeschool.database.windows.net,1433;" +
-                "Initial Catalog=RecipeDatabase;" +
-                "Persist Security Info=False;" +
-                "User ID=dev_login;Password=cpuCODE123;" +
-                "MultipleActiveResultSets=False;Encrypt=True;" +
-                "TrustServerCertificate=False;Connection Timeout=30;"
-            );
+            DBManager.SetConnString(testconn, true);
         }
 
         [Test]
@@ -56,7 +52,7 @@ namespace RecipeTest
             r["datearchived"] = archived;
 
             bool isdatedraftedblank = (r["datedrafted"].ToString() == "") ? true : false;
-            Recipe.Save(dt, isdatedraftedblank);
+            RecipeProject.Save(dt, "RecipeUpdate");
 
             TestContext.WriteLine("The new recipe name is " + recipename);
             DataTable newrecipetable = SQLUtility.GetDataTable("select r.recipeid from recipe r where r.recipename = " + "'" + newrecipename + "'");
@@ -147,7 +143,7 @@ namespace RecipeTest
             TestContext.WriteLine("Try renaming to a blank");
 
             r["recipename"] = "";
-            Exception ex = Assert.Throws<Exception>(() => Recipe.Save(dt, (r["datedrafted"].ToString() == "") ? true : false));
+            Exception ex = Assert.Throws<Exception>(() => RecipeProject.Save(dt, "RecipeUpdate"));
             TestContext.WriteLine(ex.Message);
         }
 
@@ -165,7 +161,7 @@ namespace RecipeTest
             TestContext.WriteLine("Try renaming " + r1["recipename"] + " to " + r2["recipename"]);
 
             r1["recipename"] = r2["recipename"];
-            Exception ex = Assert.Throws<Exception>(() => Recipe.Save(dt, (r1["datedrafted"].ToString() == "") ? true : false));
+            Exception ex = Assert.Throws<Exception>(() => RecipeProject.Save(dt, "RecipeUpdate"));
             TestContext.WriteLine(ex.Message);
         }
 
@@ -219,7 +215,7 @@ or datediff(day, r.DateArchived, current_timestamp) < 30";
             Assume.That(id > 0, "there is no data in the row, can't run test");
             TestContext.WriteLine("Check that an exception is thrown when trying to delete a recipe with related tables");
             TestContext.WriteLine("Trying to delete recipe with recipeid of " + id);
-            Exception ex = Assert.Throws<Exception>(() => Recipe.Delete(dt));
+            Exception ex = Assert.Throws<Exception>(() => RecipeProject.Delete(dt, "RecipeId", "RecipeDelete"));
             TestContext.WriteLine(ex.Message);
 
             SqlCommand cmd = SQLUtility.GetSqlCommand("RecipeGet");
