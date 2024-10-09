@@ -1,5 +1,5 @@
-
-using CPUFramework;
+using System.Configuration;
+using System.Runtime.CompilerServices;
 
 namespace RecipeWinForms
 {
@@ -14,15 +14,11 @@ namespace RecipeWinForms
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            DBManager.SetConnString(
-                "Server=tcp:cpucodeschool.database.windows.net,1433;" +
-                "Initial Catalog=RecipeDatabase;" +
-                "Persist Security Info=False;" +
-                "User ID=dev_login;Password=cpuCODE123;" +
-                "MultipleActiveResultSets=False;Encrypt=True;" +
-                "TrustServerCertificate=False;Connection Timeout=30;"
-            );
-            Application.Run(new frmMain());
+            frmMain f = new();
+#if DEBUG
+            f.Text = f.Text + " - DEV";
+#endif
+            Application.Run(f);
         }
     }
 }

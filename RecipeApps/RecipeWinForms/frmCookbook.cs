@@ -1,6 +1,4 @@
-﻿using RecipeSystem;
-
-namespace RecipeWinForms
+﻿namespace RecipeWinForms
 {
     public partial class frmCookbook : Form
     {

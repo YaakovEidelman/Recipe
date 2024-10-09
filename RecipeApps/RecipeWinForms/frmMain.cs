@@ -97,6 +97,14 @@
 
         private void FrmMain_Shown(object? sender, EventArgs e)
         {
+            frmLogin f = new frmLogin();
+            bool b = f.ShowLogin();
+            if(!b)
+            {
+                this.Close();
+                Application.Exit();
+                return;
+            }
             OpenForm(typeof(frmDashboard));
         }
         private void MnuDashboard_Click(object? sender, EventArgs e)
