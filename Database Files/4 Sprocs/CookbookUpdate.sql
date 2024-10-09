@@ -1,5 +1,3 @@
---AS Keep to the same naming convention: CookbookUpdate
--- Completed
 create or alter proc dbo.CookbookUpdate(
     @CookbookId int = 0 output,
     @StaffId int,

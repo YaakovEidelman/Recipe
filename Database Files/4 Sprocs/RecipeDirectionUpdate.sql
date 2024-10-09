@@ -1,5 +1,3 @@
---AS Keep to the same naming convention: RecipeDirectionUpdate
---Completed
 create or alter procedure RecipeDirectionUpdate(
     @RecipeDirectionId int = 0 output,
     @RecipeId int,
