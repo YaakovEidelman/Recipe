@@ -8,12 +8,12 @@ namespace RecipeTest
 {
     public class Tests
     {
-        string testconn = ConfigurationManager.ConnectionStrings["unittestconn"].ConnectionString;
+        string liveconn = ConfigurationManager.ConnectionStrings["liveconn"].ConnectionString;
         //string devconn = ConfigurationManager.ConnectionStrings["devconn"].ConnectionString;
         [SetUp]
         public void Setup()
         {
-            DBManager.SetConnString(testconn, true);
+            DBManager.SetConnString(liveconn, true);
         }
 
         [Test]
