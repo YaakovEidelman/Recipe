@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RecipeAppMAUI.Login"
+             Title="Login">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Entry">
+                <Setter Property="MinimumWidthRequest" Value="200"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+        <Label 
+            Text="Login"
+            FontSize="Header"
+            HorizontalOptions="Center"/>
+
+        <Label x:Name="ErrorLbl" TextColor="{StaticResource Danger}"/>
+        <Border Padding="10">
+            <Grid ColumnDefinitions="Auto, Auto" RowDefinitions="Auto, Auto, Auto" HorizontalOptions="Center" ColumnSpacing="10" RowSpacing="10">
+                <Label Text="User Name" Grid.Column="0" Grid.Row="0"/>
+                <Entry x:Name="UserNameTxt" Grid.Column="1" Grid.Row="0" Text="appadmin"/>
+
+                <Label Text="Password" Grid.Column="0" Grid.Row="1"/>
+                <Entry x:Name="PasswordTxt" Grid.Column="1" Grid.Row="1" IsPassword="True"/>
+
+                <Button x:Name="LoginBtn" Text="Login" Grid.Row="2" Grid.Column="0"/>
+                <Button x:Name="CancelBtn" Text="Cancel" Grid.Row="2" Grid.Column="1" BackgroundColor="{StaticResource Warning}"/>
+            </Grid>
+        </Border>
+
+    </VerticalStackLayout>
+</ContentPage>

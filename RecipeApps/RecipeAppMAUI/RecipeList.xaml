@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RecipeAppMAUI.RecipeList"
+             Title="RecipeList">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="VerticalTextAlignment" Value="Center"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid RowDefinitions="Auto, *" ColumnDefinitions="Auto, Auto, Auto" ColumnSpacing="10" RowSpacing="10" HorizontalOptions="Center">
+        <Label Text="Recipe Name" Grid.Column="0" Grid.Row="0" />
+        <Entry x:Name="RecipeNameTxt" Grid.Column="1" Grid.Row="0" MinimumWidthRequest="200"/>
+        <Button x:Name="SearchBtn" Text="Search" Grid.Column="2" Grid.Row="0"/>
+        <ListView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" x:Name="RecipesLst">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid RowDefinitions="Auto" ColumnDefinitions="Auto, *" ColumnSpacing="10" RowSpacing="10">
+                            <Label Grid.Column="0" Text="{Binding Path=[RecipeImagePath]}"/>
+                            <Label Grid.Column="1" Text="{Binding Path=[RecipeName]}"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</ContentPage>

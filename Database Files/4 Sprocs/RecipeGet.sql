@@ -53,3 +53,5 @@ begin
 	end
 end
 go
+
+RecipeGet @RecipeName = 'a'
