@@ -1,5 +1,4 @@
-using CPUFramework;
-using RecipeSystem;
+
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -52,7 +51,9 @@ namespace RecipeTest
             r["datearchived"] = archived;
 
             bool isdatedraftedblank = (r["datedrafted"].ToString() == "") ? true : false;
-            RecipeProject.Save(dt, "RecipeUpdate");
+            bizRecipe recipe = new();
+            recipe.Save(dt);
+            //RecipeProject.Save(dt, "RecipeUpdate");
 
             TestContext.WriteLine("The new recipe name is " + recipename);
             DataTable newrecipetable = SQLUtility.GetDataTable("select r.recipeid from recipe r where r.recipename = " + "'" + newrecipename + "'");
@@ -69,7 +70,9 @@ namespace RecipeTest
             TestContext.WriteLine("See if we can access data from the database properly");
             TestContext.WriteLine("There is a recipe in the DB with an id of " + id);
             TestContext.WriteLine("Ensure that the app loads the recipe with the id of " + id);
-            DataTable dt = SQLUtility.GetDataTable("select * from recipe where recipeid = " + id);
+            bizRecipe recipe = new();
+            //DataTable dt = SQLUtility.GetDataTable("select * from recipe where recipeid = " + id);
+            DataTable dt = recipe.Load(id);
             int loadedid = (int)dt.Rows[0]["recipeid"];
             Assert.IsTrue(id == loadedid, "Was not able load recipe from DB properly");
             TestContext.WriteLine("Loaded recipe with id " + loadedid);
@@ -168,7 +171,7 @@ namespace RecipeTest
         [Test]
         public void DeleteRecipe()
         {
-            DataTable dt = SQLUtility.GetDataTable("select top 1 * from recipe r left join recipeingredient ri on r.recipeid = ri.recipeid where ri.recipeid is null");
+            DataTable dt = SQLUtility.GetDataTable("select top 1 * from recipe r left join recipeingredient ri on r.recipeid = ri.recipeid where ri.recipeid is null and r.RecipeStatus = 'Draft'");
             int id = 0;
             if (dt.Rows.Count > 0)
             {
@@ -176,7 +179,9 @@ namespace RecipeTest
             }
             Assume.That(id > 0, "No eligable recipes in db, cannot delete");
             TestContext.WriteLine("Check that the app can delete the recipe with an id of " + id);
-            Recipe.Delete(dt);
+            bizRecipe recipe = new();
+            recipe.Delete(dt);
+            //Recipe.Delete(dt);
             DataTable dtafterdelete = SQLUtility.GetDataTable("select * from recipe where recipeid = " + id);
             Assert.IsTrue(dtafterdelete.Rows.Count == 0, "Was not able to delete the recipe");
             TestContext.WriteLine("Successfully deleted recipe with the id of " + id);
