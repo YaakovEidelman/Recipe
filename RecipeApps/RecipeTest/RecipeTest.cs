@@ -98,7 +98,6 @@ namespace RecipeTest
             recipe.Calories = calories;
             recipe.Save();
 
-
             DataTable newinfo = SQLUtility.GetDataTable("select r.recipename, r.calories, r.datedrafted from recipe r where r.recipeid = " + id);
             string newrecipename = (string)newinfo.Rows[0]["recipename"];
             int newrecipecalories = (int)newinfo.Rows[0]["calories"];
@@ -155,8 +154,8 @@ namespace RecipeTest
             Assume.That(id > 0, "No eligable recipes in db, cannot delete");
             TestContext.WriteLine("Check that the app can delete the recipe with an id of " + id);
             bizRecipe recipe = new();
-            recipe.Delete(dt);
-            //Recipe.Delete(dt);
+            recipe.Load(id);
+            recipe.Delete();
             DataTable dtafterdelete = SQLUtility.GetDataTable("select * from recipe where recipeid = " + id);
             Assert.IsTrue(dtafterdelete.Rows.Count == 0, "Was not able to delete the recipe");
             TestContext.WriteLine("Successfully deleted recipe with the id of " + id);
