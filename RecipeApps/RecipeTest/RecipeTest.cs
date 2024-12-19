@@ -71,11 +71,11 @@ namespace RecipeTest
             TestContext.WriteLine("There is a recipe in the DB with an id of " + id);
             TestContext.WriteLine("Ensure that the app loads the recipe with the id of " + id);
             bizRecipe recipe = new();
-            //DataTable dt = SQLUtility.GetDataTable("select * from recipe where recipeid = " + id);
-            DataTable dt = recipe.Load(id);
-            int loadedid = (int)dt.Rows[0]["recipeid"];
+            recipe.Load(id);
+            string recipename = recipe.RecipeName;
+            int loadedid = recipe.RecipeId;
             Assert.IsTrue(id == loadedid, "Was not able load recipe from DB properly");
-            TestContext.WriteLine("Loaded recipe with id " + loadedid);
+            TestContext.WriteLine("Loaded recipe with id " + loadedid + "\nLoaded recipe with name " + recipename);
         }
 
         [Test]
@@ -88,52 +88,27 @@ namespace RecipeTest
             DataTable dt = SQLUtility.GetDataTable("select top 1 * from recipe where recipename like " + "'%" + recipename + "%'");
             Assume.That(dt.Rows.Count > 0, "There are no rows in the table, can't test");
             int id = (int)dt.Rows[0]["recipeid"];
-            DataRow r = dt.Rows[0];
-
             TestContext.WriteLine("Checking if we can update a recipe");
+            int cals = (int)dt.Rows[0]["calories"];
+            string name = (string)dt.Rows[0]["RecipeName"];
 
-            r["staffid"] = staffid;
-            r["cuisineid"] = cuisineid;
-            r["recipename"] = recipename;
-            r["calories"] = calories;
+            bizRecipe recipe = new();
+            recipe.Load(id);
+            recipe.RecipeName = recipename + DateTime.Now.ToString();
+            recipe.Calories = calories;
+            recipe.Save();
 
-            if (drafted == null)
-            {
-                drafted = DBNull.Value;
-            }
-            if (published == null)
-            {
-                published = DBNull.Value;
-            }
-            if (archived == null)
-            {
-                archived = DBNull.Value;
-            }
-
-            r["datedrafted"] = (drafted is null) ? "" : drafted;
-            r["datepublished"] = published;
-            r["datearchived"] = archived;
-
-            bool isdatedraftedblank = (r["datedrafted"].ToString() == "") ? true : false;
-            Recipe.Save(dt, isdatedraftedblank);
-
-            TestContext.WriteLine("Updating " + recipename);
 
             DataTable newinfo = SQLUtility.GetDataTable("select r.recipename, r.calories, r.datedrafted from recipe r where r.recipeid = " + id);
             string newrecipename = (string)newinfo.Rows[0]["recipename"];
             int newrecipecalories = (int)newinfo.Rows[0]["calories"];
 
-            TestContext.WriteLine("RecipeName should be: " + recipename + Environment.NewLine + "RecipeName is: " + newrecipename);
-            TestContext.WriteLine("Calories should be: " + calories + Environment.NewLine + "Calories is: " + newrecipecalories);
+            TestContext.WriteLine($"RecipeName was {name}\n RecipeName is now {newrecipename}");
 
-
-            Assert.IsTrue(
-                newrecipename == recipename &&
-                (int)newrecipecalories == calories, "Updating recipe was unsuccessful"
-                );
-            TestContext.WriteLine("Successfully updated recipe: " + recipename);
+            Assert.IsTrue(newrecipename == recipe.RecipeName && (int)newrecipecalories == recipe.Calories, "Updating recipe was unsuccessful");
+            TestContext.WriteLine("Successfully updated recipe: " + newrecipename);
         }
-
+        
         [Test]
         public void UpdateRecipeCheckException()
         {

@@ -8,7 +8,7 @@ namespace RecipeAppMAUI
 {
     public class Settings
     {
-        public string liveconn { get; set; }
-        public string devconn { get; set; }
+        public string liveconn { get; set; } = "";
+        public string devconn { get; set; } = "";
     }
 }
