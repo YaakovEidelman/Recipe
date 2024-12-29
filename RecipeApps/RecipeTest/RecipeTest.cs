@@ -79,6 +79,64 @@ namespace RecipeTest
         }
 
         [Test]
+        public void GetListOfRecipes()
+        {
+            DataTable dt = SQLUtility.GetDataTable("select * from Recipe");
+            TestContext.WriteLine($"There is {dt.Rows.Count} rows in the recipe table");
+
+            bizRecipe recipe = new();
+            List<bizRecipe> lst = recipe.GetList();
+            TestContext.WriteLine($"There is {lst.Count} rows in the object");
+
+            Assert.IsTrue(dt.Rows.Count == lst.Count, "The object and the datatable have a different amount of rows");
+            TestContext.WriteLine($"The DataTable and the object have the same amount of rows");
+        }
+
+        [Test]
+        public void SearchRecipe()
+        {
+            string searchletter = "a";
+            DataTable dt = SQLUtility.GetDataTable($"select * from Recipe where recipename like '%{searchletter}%'");
+            TestContext.WriteLine($"The datatable has {dt.Rows.Count} rows");
+
+            bizRecipe recipe = new();
+            List<bizRecipe> lst = recipe.Search(searchletter);
+            TestContext.WriteLine($"The list has {lst.Count} rows");
+
+            Assert.IsTrue(lst.Count == dt.Rows.Count, "The datatable and list have a different amount of results");
+            TestContext.WriteLine("The datatable and list have the same amount of rows");
+        }
+
+        [Test]
+        public void GetListOfIngredients()
+        {
+            DataTable dt = SQLUtility.GetDataTable("select * from Ingredient");
+            TestContext.WriteLine($"There is {dt.Rows.Count} rows in the ingredient table");
+
+            bizIngredient ingredient = new();
+            List<bizIngredient> lst = ingredient.GetList();
+            TestContext.WriteLine($"There is {lst.Count} rows in the ingredient list");
+
+            Assert.IsTrue(dt.Rows.Count == lst.Count, "The object and the datatable have a different amount of rows");
+            TestContext.WriteLine($"The DataTable and the object have the same amount of rows");
+        }
+
+        [Test]
+        public void SearchIngredients()
+        {
+            string searchletter = "a";
+            DataTable dt = SQLUtility.GetDataTable($"select * from Ingredient where IngredientName like '%{searchletter}%'");
+            TestContext.WriteLine($"The datatable has {dt.Rows.Count} rows");
+
+            bizIngredient ingredient = new();
+            List<bizIngredient> lst = ingredient.Search(searchletter);
+            TestContext.WriteLine($"The list has {lst.Count} rows");
+
+            Assert.IsTrue(lst.Count == dt.Rows.Count, "The datatable and list have a different amount of results");
+            TestContext.WriteLine("The datatable and list have the same amount of rows");
+        }
+
+        [Test]
         [TestCase(1, 1, "Gambies", 4, null, null, null)]
         [TestCase(2, 3, "Salmon", 344, "2022-1-2", "2023-1-2", "2024-1-2")]
         [TestCase(4, 5, "Crunchie Pops", 200, "2022-1-2", "2023-1-2", null)]

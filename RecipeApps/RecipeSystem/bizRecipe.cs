@@ -1,10 +1,19 @@
 ﻿namespace RecipeSystem
 {
-    public class bizRecipe : bizObject
+    public class bizRecipe : bizObject<bizRecipe>
     {
         public bizRecipe()
         {
-            
+
+        }
+
+        public List<bizRecipe> Search(string recipenameval, bool includeblank = false)
+        {
+            SqlCommand cmd = SQLUtility.GetSqlCommand(this.GetSprocName);
+            SQLUtility.SetParamValue(cmd, "@RecipeName", recipenameval);
+            SQLUtility.SetParamValue(cmd, "@InsertBlank", includeblank);
+            DataTable dt = SQLUtility.GetDataTable(cmd);
+            return this.GetListFromDataTable(dt);
         }
 
         public int RecipeId { get; set; }
@@ -19,4 +28,3 @@
         public string RecipeImagePath { get; set; } = "";
     }
 }
-

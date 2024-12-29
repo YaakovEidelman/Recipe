@@ -2,7 +2,8 @@ create or alter procedure RecipeGet (
 	@RecipeId int = 0, 
 	@RecipeName varchar(25) = '', 
 	@All bit = 0,
-	@IsRecipeGet int = 0
+	@IsRecipeGet int = 0,
+	@InsertBlank int = 1
 )
 as 
 begin 
@@ -32,7 +33,7 @@ begin
 		or r.RecipeName like '%' + @RecipeName + '%'
 		group by r.RecipeId, r.StaffId, r.CuisineId, r.RecipeName, r.RecipeStatus, s.FirstName, s.LastName, r.Calories, r.DateDrafted, r.DatePublished, r.DateArchived, r.RecipeImagePath
 		union select 0, 0, 0, '', '', '', null, null, null, null, null, null
-		where @RecipeId = 0
+		where @RecipeId = 0 and @InsertBlank = 1
 		order by r.RecipeStatus desc
 	end
 	else if @IsRecipeGet = 1
@@ -54,4 +55,4 @@ begin
 end
 go
 
-RecipeGet @RecipeName = 'a'
+RecipeGet @RecipeName = 'a', @InsertBlank = 1
