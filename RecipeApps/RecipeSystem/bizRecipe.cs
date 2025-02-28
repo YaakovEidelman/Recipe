@@ -7,14 +7,16 @@
 
         }
 
-        public List<bizRecipe> Search(string recipenameval, bool includeblank = false)
+        public List<bizRecipe> Search(int recipeid, string recipenameval, bool includeblank = false)
         {
             SqlCommand cmd = SQLUtility.GetSqlCommand(this.GetSprocName);
+            SQLUtility.SetParamValue(cmd, "@RecipeId", recipeid);
             SQLUtility.SetParamValue(cmd, "@RecipeName", recipenameval);
             SQLUtility.SetParamValue(cmd, "@InsertBlank", includeblank);
             DataTable dt = SQLUtility.GetDataTable(cmd);
             return this.GetListFromDataTable(dt);
         }
+
 
         public int RecipeId { get; set; }
         public int StaffId { get; set; }

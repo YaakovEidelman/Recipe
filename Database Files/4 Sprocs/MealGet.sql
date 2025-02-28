@@ -1,7 +1,7 @@
 create or alter procedure dbo.MealGet
 as 
 begin 
-    select m.MealId, m.MealName, 'User' = concat(s.FirstName, ' ', s.LastName), 'Num Calories' = sum(r.Calories), 'Num Courses' = count(distinct mc.CourseId), 'Num Recipes' = count(mcr.RecipeId)
+    select m.MealId, m.MealName, 'User' = concat(s.FirstName, ' ', s.LastName), 'NumCalories' = sum(r.Calories), 'NumCourses' = count(distinct mc.CourseId), 'NumRecipes' = count(mcr.RecipeId)
     from Meal m
     left join MealCourse mc
     on mc.MealId = m.MealId

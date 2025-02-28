@@ -16,7 +16,7 @@ begin
     end
     else 
     begin 
-        select c.CookBookId, 'Cookbook Name' = c.CookBookName, 'Author' = concat(s.FirstName, ' ', s.LastName), 'Num Recipes' = count(cr.RecipeId), c.Price
+        select c.CookBookId, 'CookBookName' = c.CookBookName, 'Author' = concat(s.FirstName, ' ', s.LastName), 'NumRecipes' = count(cr.RecipeId), c.Price
         from CookBook c 
         left join CookBookRecipe cr 
         on cr.CookBookId = c.CookBookId
@@ -27,3 +27,6 @@ begin
     end
 end
 go
+
+exec CookbookGet @All = 0, @CookbookId = 2
+exec CookbookGet @All = 1
