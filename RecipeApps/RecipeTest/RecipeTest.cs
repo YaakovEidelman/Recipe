@@ -1,7 +1,7 @@
 
 using System.Configuration;
 using System.Data;
-using System.Data.SqlClient;
+//using System.Data.SqlClient;
 
 namespace RecipeTest
 {
@@ -25,7 +25,7 @@ namespace RecipeTest
             DataTable dt = SQLUtility.GetDataTable("select * from recipe where recipeid = 0");
             DataRow r = dt.Rows.Add();
 
-            TestContext.WriteLine("Check if we can insert a recipe");
+            TestContext.Out.WriteLine("Check if we can insert a recipe");
             string newrecipename = recipename + " " + DateTime.Now.ToString("HH:mm:ss");
 
             r["staffid"] = staffid;
@@ -55,11 +55,11 @@ namespace RecipeTest
             recipe.Save(dt);
             //RecipeProject.Save(dt, "RecipeUpdate");
 
-            TestContext.WriteLine("The new recipe name is " + recipename);
+            TestContext.Out.WriteLine("The new recipe name is " + recipename);
             DataTable newrecipetable = SQLUtility.GetDataTable("select r.recipeid from recipe r where r.recipename = " + "'" + newrecipename + "'");
             int newrecipeid = (int)newrecipetable.Rows[0][0];
-            Assert.IsTrue(newrecipeid > 0, "Inserting recipe was unsuccessful");
-            TestContext.WriteLine("Successfully inserted a new recipe: " + recipename);
+            Assert.That(newrecipeid > 0, "Inserting recipe was unsuccessful");
+            TestContext.Out.WriteLine("Successfully inserted a new recipe: " + recipename);
         }
 
         [Test]
@@ -67,29 +67,29 @@ namespace RecipeTest
         {
             int id = SQLUtility.GetFirstColumnFirstRowValue("select * from recipe");
             Assume.That(id > 0, "There are not recipes in the DB, can't run test");
-            TestContext.WriteLine("See if we can access data from the database properly");
-            TestContext.WriteLine("There is a recipe in the DB with an id of " + id);
-            TestContext.WriteLine("Ensure that the app loads the recipe with the id of " + id);
+            TestContext.Out.WriteLine("See if we can access data from the database properly");
+            TestContext.Out.WriteLine("There is a recipe in the DB with an id of " + id);
+            TestContext.Out.WriteLine("Ensure that the app loads the recipe with the id of " + id);
             bizRecipe recipe = new();
             recipe.Load(id);
             string recipename = recipe.RecipeName;
             int loadedid = recipe.RecipeId;
-            Assert.IsTrue(id == loadedid, "Was not able load recipe from DB properly");
-            TestContext.WriteLine("Loaded recipe with id " + loadedid + "\nLoaded recipe with name " + recipename);
+            Assert.That(id == loadedid, "Was not able load recipe from DB properly");
+            TestContext.Out.WriteLine("Loaded recipe with id " + loadedid + "\nLoaded recipe with name " + recipename);
         }
 
         [Test]
         public void GetListOfRecipes()
         {
             DataTable dt = SQLUtility.GetDataTable("select * from Recipe");
-            TestContext.WriteLine($"There is {dt.Rows.Count} rows in the recipe table");
+            TestContext.Out.WriteLine($"There is {dt.Rows.Count} rows in the recipe table");
 
             bizRecipe recipe = new();
             List<bizRecipe> lst = recipe.GetList();
-            TestContext.WriteLine($"There is {lst.Count} rows in the object");
+            TestContext.Out.WriteLine($"There is {lst.Count} rows in the object");
 
-            Assert.IsTrue(dt.Rows.Count == lst.Count, "The object and the datatable have a different amount of rows");
-            TestContext.WriteLine($"The DataTable and the object have the same amount of rows");
+            Assert.That(dt.Rows.Count == lst.Count, "The object and the datatable have a different amount of rows");
+            TestContext.Out.WriteLine($"The DataTable and the object have the same amount of rows");
         }
 
         [Test]
@@ -97,28 +97,28 @@ namespace RecipeTest
         {
             string searchletter = "a";
             DataTable dt = SQLUtility.GetDataTable($"select * from Recipe where recipename like '%{searchletter}%'");
-            TestContext.WriteLine($"The datatable has {dt.Rows.Count} rows");
+            TestContext.Out.WriteLine($"The datatable has {dt.Rows.Count} rows");
 
             bizRecipe recipe = new();
             List<bizRecipe> lst = recipe.Search(searchletter);
-            TestContext.WriteLine($"The list has {lst.Count} rows");
+            TestContext.Out.WriteLine($"The list has {lst.Count} rows");
 
-            Assert.IsTrue(lst.Count == dt.Rows.Count, "The datatable and list have a different amount of results");
-            TestContext.WriteLine("The datatable and list have the same amount of rows");
+            Assert.That(lst.Count == dt.Rows.Count, "The datatable and list have a different amount of results");
+            TestContext.Out.WriteLine("The datatable and list have the same amount of rows");
         }
 
         [Test]
         public void GetListOfIngredients()
         {
             DataTable dt = SQLUtility.GetDataTable("select * from Ingredient");
-            TestContext.WriteLine($"There is {dt.Rows.Count} rows in the ingredient table");
+            TestContext.Out.WriteLine($"There is {dt.Rows.Count} rows in the ingredient table");
 
             bizIngredient ingredient = new();
             List<bizIngredient> lst = ingredient.GetList();
-            TestContext.WriteLine($"There is {lst.Count} rows in the ingredient list");
+            TestContext.Out.WriteLine($"There is {lst.Count} rows in the ingredient list");
 
-            Assert.IsTrue(dt.Rows.Count == lst.Count, "The object and the datatable have a different amount of rows");
-            TestContext.WriteLine($"The DataTable and the object have the same amount of rows");
+            Assert.That(dt.Rows.Count == lst.Count, "The object and the datatable have a different amount of rows");
+            TestContext.Out.WriteLine($"The DataTable and the object have the same amount of rows");
         }
 
         [Test]
@@ -126,14 +126,14 @@ namespace RecipeTest
         {
             string searchletter = "a";
             DataTable dt = SQLUtility.GetDataTable($"select * from Ingredient where IngredientName like '%{searchletter}%'");
-            TestContext.WriteLine($"The datatable has {dt.Rows.Count} rows");
+            TestContext.Out.WriteLine($"The datatable has {dt.Rows.Count} rows");
 
             bizIngredient ingredient = new();
             List<bizIngredient> lst = ingredient.Search(searchletter);
-            TestContext.WriteLine($"The list has {lst.Count} rows");
+            TestContext.Out.WriteLine($"The list has {lst.Count} rows");
 
-            Assert.IsTrue(lst.Count == dt.Rows.Count, "The datatable and list have a different amount of results");
-            TestContext.WriteLine("The datatable and list have the same amount of rows");
+            Assert.That(lst.Count == dt.Rows.Count, "The datatable and list have a different amount of results");
+            TestContext.Out.WriteLine("The datatable and list have the same amount of rows");
         }
 
         [Test]
@@ -146,7 +146,7 @@ namespace RecipeTest
             DataTable dt = SQLUtility.GetDataTable("select top 1 * from recipe where recipename like " + "'%" + recipename + "%'");
             Assume.That(dt.Rows.Count > 0, "There are no rows in the table, can't test");
             int id = (int)dt.Rows[0]["recipeid"];
-            TestContext.WriteLine("Checking if we can update a recipe");
+            TestContext.Out.WriteLine("Checking if we can update a recipe");
             int cals = (int)dt.Rows[0]["calories"];
             string name = (string)dt.Rows[0]["RecipeName"];
 
@@ -160,10 +160,10 @@ namespace RecipeTest
             string newrecipename = (string)newinfo.Rows[0]["recipename"];
             int newrecipecalories = (int)newinfo.Rows[0]["calories"];
 
-            TestContext.WriteLine($"RecipeName was {name}\n RecipeName is now {newrecipename}");
+            TestContext.Out.WriteLine($"RecipeName was {name}\n RecipeName is now {newrecipename}");
 
-            Assert.IsTrue(newrecipename == recipe.RecipeName && (int)newrecipecalories == recipe.Calories, "Updating recipe was unsuccessful");
-            TestContext.WriteLine("Successfully updated recipe: " + newrecipename);
+            Assert.That(newrecipename == recipe.RecipeName && (int)newrecipecalories == recipe.Calories, "Updating recipe was unsuccessful");
+            TestContext.Out.WriteLine("Successfully updated recipe: " + newrecipename);
         }
         
         [Test]
@@ -173,13 +173,13 @@ namespace RecipeTest
             Assume.That(dt.Rows.Count > 0, "There are no rows in the table, can't run test");
             int id = (int)dt.Rows[0]["recipeid"];
             DataRow r = dt.Rows[0];
-            TestContext.WriteLine("Check that when breaking a check constraint it throws an error");
-            TestContext.WriteLine("RecipeName is " + r["recipename"]);
-            TestContext.WriteLine("Try renaming to a blank");
+            TestContext.Out.WriteLine("Check that when breaking a check constraint it throws an error");
+            TestContext.Out.WriteLine("RecipeName is " + r["recipename"]);
+            TestContext.Out.WriteLine("Try renaming to a blank");
 
             r["recipename"] = "";
             Exception ex = Assert.Throws<Exception>(() => RecipeProject.Save(dt, "RecipeUpdate"));
-            TestContext.WriteLine(ex.Message);
+            TestContext.Out.WriteLine(ex.Message);
         }
 
         [Test]
@@ -191,13 +191,13 @@ namespace RecipeTest
             int id2 = (int)dt.Rows[1]["recipeid"];
             DataRow r1 = dt.Rows[0];
             DataRow r2 = dt.Rows[1];
-            TestContext.WriteLine("Check that when breaking a unique constraint it throws an error");
-            TestContext.WriteLine("RecipeName is " + r1["recipename"]);
-            TestContext.WriteLine("Try renaming " + r1["recipename"] + " to " + r2["recipename"]);
+            TestContext.Out.WriteLine("Check that when breaking a unique constraint it throws an error");
+            TestContext.Out.WriteLine("RecipeName is " + r1["recipename"]);
+            TestContext.Out.WriteLine("Try renaming " + r1["recipename"] + " to " + r2["recipename"]);
 
             r1["recipename"] = r2["recipename"];
             Exception ex = Assert.Throws<Exception>(() => RecipeProject.Save(dt, "RecipeUpdate"));
-            TestContext.WriteLine(ex.Message);
+            TestContext.Out.WriteLine(ex.Message);
         }
 
         [Test]
@@ -210,13 +210,13 @@ namespace RecipeTest
                 id = (int)dt.Rows[0]["recipeid"];
             }
             Assume.That(id > 0, "No eligable recipes in db, cannot delete");
-            TestContext.WriteLine("Check that the app can delete the recipe with an id of " + id);
+            TestContext.Out.WriteLine("Check that the app can delete the recipe with an id of " + id);
             bizRecipe recipe = new();
             recipe.Load(id);
             recipe.Delete();
             DataTable dtafterdelete = SQLUtility.GetDataTable("select * from recipe where recipeid = " + id);
-            Assert.IsTrue(dtafterdelete.Rows.Count == 0, "Was not able to delete the recipe");
-            TestContext.WriteLine("Successfully deleted recipe with the id of " + id);
+            Assert.That(dtafterdelete.Rows.Count == 0, "Was not able to delete the recipe");
+            TestContext.Out.WriteLine("Successfully deleted recipe with the id of " + id);
         }
 
         [Test]
@@ -234,10 +234,10 @@ or datediff(day, r.DateArchived, current_timestamp) < 30";
                 id = (int)dt.Rows[0]["recipeid"];
             }
             Assume.That(id > 0, "No eligable recipes in db, cannot check for bussiness rule");
-            TestContext.WriteLine("Check that the app prevents deleting recipe with a bussiness rule");
-            TestContext.WriteLine("Trying to delete recipe with an id of " + id);
+            TestContext.Out.WriteLine("Check that the app prevents deleting recipe with a bussiness rule");
+            TestContext.Out.WriteLine("Trying to delete recipe with an id of " + id);
             Exception ex = Assert.Throws<Exception>(() => Recipe.Delete(dt));
-            TestContext.WriteLine(ex.Message);
+            TestContext.Out.WriteLine(ex.Message);
         }
 
         [Test]
@@ -250,15 +250,15 @@ or datediff(day, r.DateArchived, current_timestamp) < 30";
                 id = (int)dt.Rows[0]["recipeid"];
             }
             Assume.That(id > 0, "there is no data in the row, can't run test");
-            TestContext.WriteLine("Check that an exception is thrown when trying to delete a recipe with related tables");
-            TestContext.WriteLine("Trying to delete recipe with recipeid of " + id);
+            TestContext.Out.WriteLine("Check that an exception is thrown when trying to delete a recipe with related tables");
+            TestContext.Out.WriteLine("Trying to delete recipe with recipeid of " + id);
             Exception ex = Assert.Throws<Exception>(() => RecipeProject.Delete(dt, "RecipeId", "RecipeDelete"));
-            TestContext.WriteLine(ex.Message);
+            TestContext.Out.WriteLine(ex.Message);
 
             SqlCommand cmd = SQLUtility.GetSqlCommand("RecipeGet");
             cmd.Parameters["@recipeid"].Value = id;
             DataTable newdt = SQLUtility.GetDataTable(cmd);
-            TestContext.WriteLine("The recipeid with an id of " + newdt.Rows[0]["recipeid"] + " still exists");
+            TestContext.Out.WriteLine("The recipeid with an id of " + newdt.Rows[0]["recipeid"] + " still exists");
         }
 
         public static string GetFirstColumnFirstRowValueAsString(string sql)
