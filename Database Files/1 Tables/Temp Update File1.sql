@@ -1,12 +1,11 @@
 
--- Cookbook skill level -
--- beginner, intermediate or
--- advanced.
 
-
--- ALTER TABLE Recipe ADD IsVegan BIT NOT NULL DEFAULT 0
--- ALTER TABLE Meal ADD MealDesc VARCHAR(255) NOT NULL DEFAULT ''
+ALTER TABLE Recipe ADD IsVegan BIT NOT NULL DEFAULT 0
+GO
+ALTER TABLE Meal ADD MealDesc VARCHAR(255) NOT NULL DEFAULT ''
+GO
  ALTER TABLE Cookbook ADD SkillLevel INT NOT NULL DEFAULT 1
+ GO
  ALTER TABLE Cookbook ADD SkillDesc as (
      CASE 
          WHEN SkillLevel = 1 THEN 'Beginner'
@@ -14,6 +13,7 @@
          WHEN SkillLevel = 3 THEN 'Advanced'
      END
  ) PERSISTED
+GO
 select * from recipe
 
 UPDATE recipe
@@ -23,7 +23,7 @@ SET isvegan = CASE
     WHEN recipe.RecipeName IN ('Tomato Salad', 'Pancakes') THEN 1
     ELSE isvegan
 END;
-
+GO
 SELECT * FROM Meal
 
 UPDATE Meal
@@ -34,7 +34,7 @@ SET MealDesc = CASE
     WHEN MealName = 'Homestyle Supper' THEN 'A comforting homemade supper with a traditional touch.'
     ELSE MealDesc
 END;
-
+GO
 select * from CookBook
 
 UPDATE Cookbook
@@ -45,5 +45,3 @@ SET SkillLevel = CASE
     WHEN CookBookName = 'Quick and Easy Recipes' THEN 3
     ELSE SkillLevel
 END;
-
-use HeartyHearthDB

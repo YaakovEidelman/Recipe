@@ -23,7 +23,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-string settingval = "";
+string settingval = "Settings:liveconn";
 #if DEBUG
 settingval = "Settings:devconn";
 #endif
