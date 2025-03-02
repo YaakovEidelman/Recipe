@@ -1,6 +1,11 @@
 using RecipeSystem;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+});
 
 // Add services to the container.
 
@@ -29,6 +34,7 @@ if (connstring is not null)
     DBManager.SetConnString(connstring, true);
 }
 
+app.UseCors("AllowAllOrigins");
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

@@ -20,5 +20,7 @@
         public DateTime? DateCreated { get; set; }
         public string? Author { get; set; }
         public int? NumRecipes { get; set; }
+        public int SkillLevel { get; set; }
+        public string SkillDesc { get; set; } = "";
     }
 }

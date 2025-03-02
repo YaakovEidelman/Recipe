@@ -8,5 +8,6 @@
         public int NumCalories { get; set; }
         public int NumCourses { get; set; }
         public int NumRecipes { get; set; }
+        public string MealDesc { get; set; } = "";
     }
 }

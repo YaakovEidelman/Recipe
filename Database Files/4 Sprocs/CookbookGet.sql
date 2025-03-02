@@ -8,21 +8,21 @@ begin
 
     if @All = 0
     begin
-        select c.CookBookId, c.StaffId, c.CookBookName, c.Price, c.IsActive, c.DateCreated
+        select c.CookBookId, c.StaffId, c.CookBookName, c.Price, c.IsActive, c.DateCreated, c.SkillLevel, c.SkillDesc
         from CookBook c
         where c.CookBookId = @CookbookId
-        union select 0, 0, '', 0, 0, null
+        union select 0, 0, '', 0, 0, null, 0, ''
         where @CookbookId = 0
     end
     else 
     begin 
-        select c.CookBookId, 'CookBookName' = c.CookBookName, 'Author' = concat(s.FirstName, ' ', s.LastName), 'NumRecipes' = count(cr.RecipeId), c.Price
+        select c.CookBookId, 'CookBookName' = c.CookBookName, 'Author' = concat(s.FirstName, ' ', s.LastName), 'NumRecipes' = count(cr.RecipeId), c.Price, c.SkillLevel, c.SkillDesc
         from CookBook c 
         left join CookBookRecipe cr 
         on cr.CookBookId = c.CookBookId
         left join Staff s 
         on c.StaffId = s.StaffId
-        group by c.CookBookId, c.CookBookName, s.FirstName, s.LastName, c.Price
+        group by c.CookBookId, c.CookBookName, s.FirstName, s.LastName, c.Price, c.SkillLevel, c.SkillDesc
         order by c.CookBookName
     end
 end

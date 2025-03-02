@@ -11,13 +11,28 @@ namespace RecipeAPI.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(new bizCookbook().GetList());
+            var b = new bizCookbook()
+                .GetList()
+                .Select(c => c.GetType()
+                    .GetProperties()
+                    .Where(prop => prop.GetValue(c) != null)
+                    .ToDictionary(p => p.Name, p => p.GetValue(c))
+                ).ToList();
+            
+            return Ok(b);
         }
 
         [HttpGet("query")]
-        public IActionResult GetById(int id, int all)
+        public IActionResult GetById(int id)
         {
-            return Ok(new bizCookbook().Search(id, all));
+            var b = new bizCookbook()
+                .Search(id, 0)
+                .Select(c => c.GetType()
+                    .GetProperties()
+                    .Where(prop => prop.GetValue(c) != null)
+                    .ToDictionary(p => p.Name, p => p.GetValue(c))
+                ).ToList();
+            return Ok(b);
         }
     }
 }

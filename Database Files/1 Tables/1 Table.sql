@@ -83,7 +83,9 @@ create table dbo.Recipe(
     constraint c_DatePulished_Must_Be_After_DateDrafted_and_DateArchived_Must_Be_After_DatePublished 
         check(DatePublished >= DateDrafted and DateArchived >= isnull(DatePublished, DateDrafted))
 )
-
+GO
+ALTER TABLE Recipe ADD IsVegan BIT NOT NULL DEFAULT 0
+GO
 
 create table dbo.RecipeIngredient(
     RecipeIngredientId int not null identity primary key,
@@ -127,7 +129,9 @@ create table dbo.Meal(
     IsActive bit not null default 1,
     MealImagePath as concat('Meal_', replace(MealName, ' ', '_'), '.jpeg')
 )
-
+GO
+ALTER TABLE Meal ADD MealDesc VARCHAR(255) NOT NULL DEFAULT ''
+GO
 
 create table dbo.Course(
     CourseId int not null identity primary key,
@@ -176,7 +180,16 @@ create table dbo.CookBook(
         constraint c_CookBook_DateCreated_Cannot_A_Future_Date check(DateCreated <= getdate()),
     CookBookImagePath as concat('CookBook_', replace(CookBookName, ' ', '_'), '.jpeg')
 )
-
+GO
+ALTER TABLE Cookbook ADD SkillLevel INT NOT NULL DEFAULT 1
+ALTER TABLE Cookbook ADD SkillDesc as (
+    CASE 
+        WHEN SkillLevel = 1 THEN 'Beginner'
+        WHEN SkillLevel = 2 THEN 'Intermediate'
+        WHEN SkillLevel = 3 THEN 'Advanced'
+    END
+)
+GO
 
 create table dbo.CookBookRecipe(
     CookBookRecipeId int not null identity primary key,

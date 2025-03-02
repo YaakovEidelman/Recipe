@@ -22,11 +22,14 @@
         public int StaffId { get; set; }
         public int CuisineId { get; set; }
         public string RecipeName { get; set; } = "";
-        public int Calories { get; set; }
         public string RecipeStatus { get; set; } = "";
+        public string Username { get; set; } = "";
+        public int Calories { get; set; }
         public DateTime DateDrafted { get; set; }
         public DateTime? DatePublished { get; set; }
         public DateTime? DateArchived { get; set; }
         public string RecipeImagePath { get; set; } = "";
+        public int NumIngredients { get; set; }
+        public bool IsVegan { get; set; }
     }
 }

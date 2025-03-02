@@ -12,7 +12,14 @@ namespace RecipeAPI.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(new bizRecipe().GetList());
+            var b = new bizRecipe()
+                .GetList(false, 1)
+                .Select(c => c.GetType()
+                    .GetProperties()
+                    .Where(prop => prop.GetValue(c) != null)
+                    .ToDictionary(p => p.Name, p => p.GetValue(c))
+                ).ToList();
+            return Ok(b);
         }
 
         [HttpGet("query")]

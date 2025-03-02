@@ -2,7 +2,7 @@ create or alter procedure RecipeGet (
 	@RecipeId int = 0, 
 	@RecipeName varchar(25) = '', 
 	@All bit = 0,
-	@IsRecipeGet int = 0,
+	@IsRecipeGet INT = 0,
 	@InsertBlank int = 1
 )
 as 
@@ -22,7 +22,8 @@ begin
 			r.DatePublished, 
 			r.DateArchived, 
 			r.RecipeImagePath, 
-			NumIngredients = count(ri.RecipeIngredientId)
+			NumIngredients = count(ri.RecipeIngredientId),
+			r.IsVegan
 		from Recipe r
 		join Staff s 
 		on r.StaffId = s.StaffId
@@ -31,20 +32,20 @@ begin
 		where r.RecipeId = @RecipeId
 		or @All = 1
 		or r.RecipeName like '%' + @RecipeName + '%'
-		group by r.RecipeId, r.StaffId, r.CuisineId, r.RecipeName, r.RecipeStatus, s.FirstName, s.LastName, r.Calories, r.DateDrafted, r.DatePublished, r.DateArchived, r.RecipeImagePath
-		union select 0, 0, 0, '', '', '', null, null, null, null, null, null
+		group by r.RecipeId, r.StaffId, r.CuisineId, r.RecipeName, r.RecipeStatus, s.FirstName, s.LastName, r.Calories, r.DateDrafted, r.DatePublished, r.DateArchived, r.RecipeImagePath, r.IsVegan
+		union select 0, 0, 0, '', '', '', null, null, null, null, null, null, null
 		where @RecipeId = 0 and @InsertBlank = 1
 		order by r.RecipeStatus desc
 	end
 	else if @IsRecipeGet = 1
 	begin 
-		select r.RecipeId, r.RecipeName, r.RecipeStatus, UserName = concat(s.FirstName, ' ', s.LastName), r.Calories, NumIngredients = count(ri.RecipeIngredientId)
+		select r.RecipeId, r.RecipeName, r.RecipeStatus, UserName = concat(s.FirstName, ' ', s.LastName), r.Calories, NumIngredients = count(ri.RecipeIngredientId), r.IsVegan
 		from Recipe r 
 		join Staff s
 		on s.StaffId = r.StaffId
 		left join RecipeIngredient ri 
 		on ri.RecipeId = r.RecipeId
-		group by r.RecipeId, r.RecipeName, r.RecipeStatus, s.FirstName, s.LastName, r.Calories
+		group by r.RecipeId, r.RecipeName, r.RecipeStatus, s.FirstName, s.LastName, r.Calories, r.IsVegan
 		order by r.RecipeStatus desc
 	end
 	else if @IsRecipeGet = 2
