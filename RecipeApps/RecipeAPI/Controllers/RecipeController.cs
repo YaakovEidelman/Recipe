@@ -27,5 +27,11 @@ namespace RecipeAPI.Controllers
         {
             return Ok(new bizRecipe().Search(id, ""));
         }
+
+        [HttpGet("cookbook/{cookbookname}")]
+        public IActionResult GetRecipes(string cookbookname)
+        {
+            return Ok(new bizRecipe().Search(0, "", false, cookbookname, 1));
+        }
     }
 }

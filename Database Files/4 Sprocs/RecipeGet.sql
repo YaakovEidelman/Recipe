@@ -3,10 +3,13 @@ create or alter procedure RecipeGet (
 	@RecipeName varchar(25) = '', 
 	@All bit = 0,
 	@IsRecipeGet INT = 0,
-	@InsertBlank int = 1
+	@InsertBlank int = 1,
+	@CookbookName varchar(50) = ''
 )
 as 
 begin 
+
+
 	if @IsRecipeGet = 0
 	begin
 		select @RecipeName = nullif(@RecipeName, '')
@@ -45,6 +48,14 @@ begin
 		on s.StaffId = r.StaffId
 		left join RecipeIngredient ri 
 		on ri.RecipeId = r.RecipeId
+
+		left join CookBookRecipe cbr
+		on cbr.RecipeId = r.RecipeId
+		left join CookBook c
+		on cbr.CookBookId = c.CookBookId
+		where @CookbookName = ''
+		or LOWER(REPLACE(@CookbookName, '-', ' ')) = c.CookBookName
+
 		group by r.RecipeId, r.RecipeName, r.RecipeStatus, s.FirstName, s.LastName, r.Calories, r.IsVegan
 		order by r.RecipeStatus desc
 	end
@@ -56,4 +67,20 @@ begin
 end
 go
 
-RecipeGet @RecipeName = 'a', @InsertBlank = 1
+select * from Recipe
+--RecipeGet @RecipeName = 'a', @InsertBlank = 1
+--exec RecipeGet @CookbookName = 'Family Favorites Cookbook', @IsRecipeGet = 1
+
+--	declare @name varchar(50) = 'Treats for Two'
+--	declare @cbname varchar(50) = '';
+--	select @cbname = r.RecipeName
+--	from CookBookRecipe cbr
+--	join Recipe r 
+--	on cbr.RecipeId = r.RecipeId
+--	join CookBook cb 
+--	on cbr.CookBookId = cb.CookBookId
+--	where cb.CookBookName = @name
+
+--	select @cbname
+
+--	select * from CookBook
