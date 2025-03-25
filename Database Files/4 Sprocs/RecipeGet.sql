@@ -42,7 +42,7 @@ begin
 	end
 	else if @IsRecipeGet = 1
 	begin 
-		select r.RecipeId, r.RecipeName, r.RecipeStatus, UserName = concat(s.FirstName, ' ', s.LastName), r.Calories, NumIngredients = count(ri.RecipeIngredientId), r.IsVegan
+		select r.RecipeId, r.StaffId, r.CuisineId, r.RecipeName, r.RecipeStatus, UserName = concat(s.FirstName, ' ', s.LastName), r.Calories, NumIngredients = count(ri.RecipeIngredientId), r.IsVegan
 		from Recipe r 
 		join Staff s
 		on s.StaffId = r.StaffId
@@ -56,7 +56,7 @@ begin
 		where @CookbookName = ''
 		or LOWER(REPLACE(@CookbookName, '-', ' ')) = c.CookBookName
 
-		group by r.RecipeId, r.RecipeName, r.RecipeStatus, s.FirstName, s.LastName, r.Calories, r.IsVegan
+		group by r.RecipeId, r.StaffId, r.CuisineId, r.RecipeName, r.RecipeStatus, s.FirstName, s.LastName, r.Calories, r.IsVegan
 		order by r.RecipeStatus desc
 	end
 	else if @IsRecipeGet = 2
@@ -84,3 +84,5 @@ select * from Recipe
 --	select @cbname
 
 --	select * from CookBook
+
+exec RecipeGet @IsRecipeGet = 1
