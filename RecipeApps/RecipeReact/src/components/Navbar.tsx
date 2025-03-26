@@ -23,7 +23,7 @@ function Navbar({cuisineClick}: Props) {
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <a className="navbar-brand" href="#">
                     <img
-                        src="/images/Hearty Hearth.webp"
+                        src="/images/Hearty Hearth.jpg"
                         alt="Logo"
                         className="d-inline-block rounded-3 p-1 navbar-logo"
                     />
