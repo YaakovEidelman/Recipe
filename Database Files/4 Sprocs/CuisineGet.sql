@@ -17,3 +17,5 @@ begin
 	order by c.CuisineType
 end
 go
+
+select * from Cuisine

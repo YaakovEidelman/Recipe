@@ -4,7 +4,8 @@ create or alter procedure RecipeGet (
 	@All bit = 0,
 	@IsRecipeGet INT = 0,
 	@InsertBlank int = 1,
-	@CookbookName varchar(50) = ''
+	@CookbookName varchar(50) = '',
+	@CuisineId INT = NULL
 )
 as 
 begin 
@@ -53,8 +54,9 @@ begin
 		on cbr.RecipeId = r.RecipeId
 		left join CookBook c
 		on cbr.CookBookId = c.CookBookId
-		where @CookbookName = ''
-		or LOWER(REPLACE(@CookbookName, '-', ' ')) = c.CookBookName
+		where (@CookbookName <> ''
+		AND LOWER(REPLACE(@CookbookName, '-', ' ')) = c.CookBookName)
+		or (@CookbookName = '' AND @CuisineId IS NOT NULL AND @CuisineId = r.CuisineId)
 
 		group by r.RecipeId, r.StaffId, r.CuisineId, r.RecipeName, r.RecipeStatus, s.FirstName, s.LastName, r.Calories, r.IsVegan
 		order by r.RecipeStatus desc
@@ -85,4 +87,5 @@ select * from Recipe
 
 --	select * from CookBook
 
-exec RecipeGet @IsRecipeGet = 1
+exec RecipeGet @IsRecipeGet = 1, @CuisineId = 1
+select * from Cuisine

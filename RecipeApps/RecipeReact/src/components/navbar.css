@@ -1,0 +1,17 @@
+.navbar-logo {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+}
+
+@media (max-width: 991px) {
+    .navbar-logo{
+        max-width: 150px;
+    }
+}
+
+@media (max-width: 767px) {
+    .navbar-logo{
+        max-width: 100px;
+    }
+}

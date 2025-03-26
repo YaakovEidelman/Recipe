@@ -33,5 +33,11 @@ namespace RecipeAPI.Controllers
         {
             return Ok(new bizRecipe().Search(0, "", false, cookbookname, 1));
         }
+        [HttpGet("cuisine/{cuisineId}")]
+        public IActionResult GetByCuisine(int cuisineId)
+        {
+            List<bizRecipe> c = new bizRecipe().GetList(false, 1, cuisineId);
+            return Ok(c);
+        }
     }
 }

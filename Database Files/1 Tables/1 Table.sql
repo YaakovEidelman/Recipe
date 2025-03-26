@@ -182,6 +182,7 @@ create table dbo.CookBook(
 )
 GO
 ALTER TABLE Cookbook ADD SkillLevel INT NOT NULL DEFAULT 1
+GO
 ALTER TABLE Cookbook ADD SkillDesc as (
     CASE 
         WHEN SkillLevel = 1 THEN 'Beginner'
