@@ -7,6 +7,7 @@ create or alter procedure RecipeUpdate
     @CuisineId int,
     @RecipeName varchar(25) output,
     @Calories int,
+	@IsVegan bit = 0,
     @RecipeStatus varchar(9) = '' output,
     @DateDrafted date output,
     @DatePublished date output,
@@ -20,8 +21,8 @@ begin
     begin try
         if @RecipeId = 0
         begin 
-            insert Recipe(StaffId, CuisineId, RecipeName, Calories, DateDrafted, DatePublished, DateArchived)
-            values(@StaffId, @CuisineId, @RecipeName, @Calories, @DateDrafted, @DatePublished, @DateArchived)
+            insert Recipe(StaffId, CuisineId, RecipeName, Calories, IsVegan, DateDrafted, DatePublished, DateArchived)
+            values(@StaffId, @CuisineId, @RecipeName, @Calories, @IsVegan, @DateDrafted, @DatePublished, @DateArchived)
 
             select @RecipeId = scope_identity()
         end
@@ -33,6 +34,7 @@ begin
                 CuisineId = @CuisineId, 
                 RecipeName = @RecipeName, 
                 Calories = @Calories, 
+				IsVegan = @IsVegan,
                 DateDrafted = @DateDrafted, 
                 DatePublished = @DatePublished, 
                 DateArchived = @DateArchived

@@ -39,5 +39,33 @@ namespace RecipeAPI.Controllers
             List<bizRecipe> c = new bizRecipe().GetList(false, 1, cuisineId);
             return Ok(c);
         }
+
+        [HttpPost("upsert")]
+        public IActionResult Post([FromForm] bizRecipe r)
+        {
+            try
+            {
+                r.Save();
+                return Ok(new { message = "Saved", recipeId = r.RecipeId });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpDelete("delete")]
+        public IActionResult Delete(int recipeid)
+        {
+            try
+            {
+                new bizRecipe().Delete(recipeid);
+                return Ok(new { message = "Deleted" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
     }
 }

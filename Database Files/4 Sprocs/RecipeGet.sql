@@ -57,6 +57,7 @@ begin
 		where (@CookbookName <> ''
 		AND LOWER(REPLACE(@CookbookName, '-', ' ')) = c.CookBookName)
 		or (@CookbookName = '' AND @CuisineId IS NOT NULL AND @CuisineId = r.CuisineId)
+		or @CuisineId IS NULL
 
 		group by r.RecipeId, r.StaffId, r.CuisineId, r.RecipeName, r.RecipeStatus, s.FirstName, s.LastName, r.Calories, r.IsVegan
 		order by r.RecipeStatus desc
@@ -87,5 +88,5 @@ select * from Recipe
 
 --	select * from CookBook
 
-exec RecipeGet @IsRecipeGet = 1, @CuisineId = 1
+exec RecipeGet @IsRecipeGet = 1
 select * from Cuisine
