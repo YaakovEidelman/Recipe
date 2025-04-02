@@ -1,5 +1,4 @@
 import { IRecipe } from "../Interfaces"
-import RecipeCard from "./RecipeCard";
 
 interface Props {
     recipes: IRecipe[];
