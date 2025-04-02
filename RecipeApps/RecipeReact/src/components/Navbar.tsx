@@ -2,20 +2,19 @@ import { useEffect, useState } from "react";
 import { CuisineNavbar } from "./CuisineNavbar";
 import "./navbar.css";
 import { ICuisine } from "../Interfaces";
+import { fetchCuisine } from "../DataUtil";
 
 interface Props {
-    cuisineClick: (num:number) => void;
+    cuisineClick: (num: number) => void;
+    showRecipesClick: (isVisible: boolean) => void;
 }
 
-function Navbar({cuisineClick}: Props) {
+function Navbar({ cuisineClick, showRecipesClick }: Props) {
     const [cuisines, setCuisines] = useState<ICuisine[]>([]);
     useEffect(() => {
-        const fetchData = async () => {
-            const r = await fetch("https://recipeapiye.azurewebsites.net/api/cuisine");
-            const data = await r.json();
-            setCuisines(data);
-        }
-        fetchData();
+        (async () => {
+            setCuisines(await fetchCuisine());
+        })();
     }, []);
 
     return (
@@ -72,7 +71,7 @@ function Navbar({cuisineClick}: Props) {
                 </div>
                 <div className="row">
                     {cuisines.map((c, i) => (
-                        <CuisineNavbar cuisine={c} key={i} cuisineClick={cuisineClick}/>
+                        <CuisineNavbar cuisine={c} key={i} cuisineClick={cuisineClick} showRecipesClick={showRecipesClick}/>
                     ))}
                 </div>
             </div>

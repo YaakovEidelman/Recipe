@@ -1,22 +1,27 @@
 import { IRecipe } from "../Interfaces";
 
 interface Props {
-    recipe: IRecipe
+    recipe: IRecipe;
+    handleRecipeForEdit: (recipe: IRecipe) => void;
 }
 
-function RecipeCard({recipe}: Props) {
+function RecipeCard({ recipe, handleRecipeForEdit }: Props) {
     return (
         <>
-            <div className="col-lg-6">
+            <div className="col-lg-4">
                 <div className="card">
-                    <img
-                        className="card-img-top"
-                        src={`/images/${recipe.recipeName.toLowerCase()}.jpg`}
-                        alt="Card image cap"
-                        style={{width: "100%", height: "auto"}}
-                    />
+                    <img className="card-img-top" src={`/images/${recipe.recipeName.toLowerCase()}.jpg`} alt="Card image cap"
+                        style={{ width: "100%", maxHeight: "40vh" }} />
                     <div className="card-body">
                         <h5 className="card-title">{recipe.recipeName}</h5>
+                    </div>
+                    <div className="row p-1">
+                        <div className="col">
+                            <button
+                                onClick={() => { handleRecipeForEdit(recipe); }}
+                                className="btn btn-outline-primary w-100"
+                            >Edit</button>
+                        </div>
                     </div>
                 </div>
             </div>

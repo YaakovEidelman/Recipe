@@ -17,4 +17,21 @@ export interface IRecipe {
     recipeImagePath: string;
     numIngredients: number;
     isVegan: boolean;
+    errorMessage: string;
+}
+
+// export interface IRecipe {
+//     recipeId: number;
+//     staffId: number;
+//     cuisineId: number;
+//     recipeName: string;
+//     calories: number;
+//     isVegan: boolean;
+// }
+
+export interface IStaff {
+    staffId: number;
+    firstName: string;
+    lastName: string;
+    userName: string;
 }

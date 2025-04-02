@@ -40,31 +40,40 @@ namespace RecipeAPI.Controllers
             return Ok(c);
         }
 
+        //[FromForm]  
+
         [HttpPost("upsert")]
-        public IActionResult Post([FromForm] bizRecipe r)
+        public IActionResult Post(bizRecipe r)
         {
             try
             {
                 r.Save();
-                return Ok(new { message = "Saved", recipeId = r.RecipeId });
+                r.ErrorMessage = "Saved";
+                return Ok(r);
             }
             catch (Exception ex)
             {
-                return BadRequest(new { message = ex.Message });
+                r.ErrorMessage = ex.Message;
+                return BadRequest(r);
             }
         }
 
         [HttpDelete("delete")]
         public IActionResult Delete(int recipeid)
         {
+            //bizRecipe r = new bizRecipe().Search(recipeid, "")[0];
             try
             {
-                new bizRecipe().Delete(recipeid);
-                return Ok(new { message = "Deleted" });
+                bizRecipe r = new bizRecipe();
+                r.Delete(recipeid);
+                r.ErrorMessage = "Deleted";
+                return Ok(r);
             }
             catch (Exception ex)
             {
-                return BadRequest(new { message = ex.Message });
+                bizRecipe r = new();
+                r.ErrorMessage = ex.Message;
+                return BadRequest(r);
             }
         }
     }

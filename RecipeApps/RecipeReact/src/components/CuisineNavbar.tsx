@@ -3,16 +3,17 @@ import { ICuisine } from "../Interfaces";
 interface Props {
     cuisine: ICuisine;
     cuisineClick: (num: number) => void;
+    showRecipesClick: (isVisible: boolean) => void;
 }
 
-export function CuisineNavbar({ cuisine, cuisineClick }: Props) {
+export function CuisineNavbar({ cuisine, cuisineClick, showRecipesClick }: Props) {
     return (
         <>
             <div className="col-lg-3">
                 <div className="card">
                     <button
                         className="btn btn-outline-success text-white p-1"
-                        onClick={() => cuisineClick(cuisine.cuisineId)}
+                        onClick={() => {cuisineClick(cuisine.cuisineId); showRecipesClick(false)}}
                         data-bs-toggle="collapse"
                         data-bs-target="#subnavCollapse">
                         <img

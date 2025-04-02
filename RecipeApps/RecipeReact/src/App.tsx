@@ -4,41 +4,84 @@ import Navbar from "./components/Navbar";
 import RecipeCard from "./components/RecipeCard";
 import { useEffect, useState } from "react";
 import { IRecipe } from "./Interfaces";
+import { fetchRecipes } from "./DataUtil";
+import { RecipeEdit } from "./components/RecipeEdit";
+import { RecipeCount } from "./components/RecipeCount";
+
+let initRecipe: IRecipe = {
+    recipeId: 0,
+    staffId: 0,
+    cuisineId: 0,
+    recipeName: "",
+    recipeStatus: "",
+    username: "",
+    calories: 0,
+    dateDrafted: new Date().toISOString().split('T')[0],
+    datePublished: null,
+    dateArchived: null,
+    recipeImagePath: "",
+    numIngredients: 0,
+    isVegan: false,
+    errorMessage: ""
+}
 
 function App() {
     const [recipes, setRecipes] = useState<IRecipe[]>([]);
     const [cuisineId, setCuisineId] = useState<number | null>(0);
+    const [editPage, setEditPage] = useState(false);
+    const [recipeForEdit, setRecipeForEdit] = useState<IRecipe>(initRecipe);
+    const [recipedelete, setRecipeDelete] = useState(false);
 
     useEffect(() => {
-        const fetchData = async () => {
-            const r = await fetch(
-                "https://recipeapiye.azurewebsites.net/api/recipe/cuisine/" +
-                    cuisineId
-            );
-            const data = await r.json();
-            setRecipes(data);
-        };
-        fetchData();
-    }, [recipes]);
+        (async () => {
+            setRecipes(await fetchRecipes("recipe/cuisine/" + cuisineId));
+        })();
+    }, [cuisineId, recipedelete]);
+
+    const handleUpdateRecipeForEdit = (recipe: IRecipe) => {
+        setEditPage(false);
+        setRecipeForEdit(recipe);
+        setEditPage(true);
+    }
 
     const handleCuisineClick = (num: number) => {
         setCuisineId(num);
     };
+
+    const handleEditPage = (isVisible: boolean) => {
+        setEditPage(isVisible);
+    }
+
+    const updateRecipeDelete = () => {
+        setRecipeDelete(!recipedelete);
+    }
 
     return (
         <>
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-12">
-                        <Navbar cuisineClick={handleCuisineClick}/>
+                        <Navbar cuisineClick={handleCuisineClick} showRecipesClick={handleEditPage} />
                     </div>
                     <div className="row">
-                        <h3>{recipes.length === 0? "Select a cuisine from the recipe drop downlist" : `${recipes.length} recipes`}</h3>
-                        {recipes.length > 0 && (
-                            recipes.map((r, i) => (
-                                <RecipeCard recipe={r} key={i}/>
-                            ))
-                        )}
+                        <div className="col-4">
+                            <button
+                                onClick={() => handleUpdateRecipeForEdit(initRecipe)}
+                                className="btn btn-outline-success"
+                            >New Recipe</button>
+                        </div>
+                    </div>
+                    <div className="row">
+                        {
+                            (editPage)
+                                ? <RecipeEdit recipe={recipeForEdit} updateRecipe={updateRecipeDelete}/>
+                                : (
+                                    <>
+                                        <RecipeCount recipes={recipes} />
+                                        {recipes.map((r, i) => <RecipeCard handleRecipeForEdit={handleUpdateRecipeForEdit} recipe={r} key={i} />)}
+                                    </>
+                                )
+                        }
                     </div>
                 </div>
             </div>
