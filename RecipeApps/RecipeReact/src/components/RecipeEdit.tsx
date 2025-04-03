@@ -46,7 +46,7 @@ export function RecipeEdit({ recipe, updateRecipe }: Props) {
                     <h2 className="text-center mb-4" id="msg">{errormsg}</h2>
                     <form id="frm" onSubmit={handleSubmit(submitForm)}>
                         <div className="mb-3">
-                            <input className="form-control" id="recipeId" {...register("recipeId")} required />
+                            <input className="form-control" id="recipeId" {...register("recipeId")} hidden required />
                         </div>
                         <div className="mb-3">
                             <label htmlFor="staffId" className="form-label">Username</label>
