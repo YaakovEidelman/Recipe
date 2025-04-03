@@ -1,7 +1,7 @@
 import { FieldValues } from "react-hook-form";
 import { ICuisine, IRecipe, IStaff } from "./Interfaces";
 
-let baseurl = import.meta.env.VITE_API_URL;
+let baseurl = "https://recipeapiye.azurewebsites.net/api/"//import.meta.env.VITE_API_URL;
 
 async function fetchData<T>(url: string): Promise<T> {
     let response = await fetch(baseurl + url);
