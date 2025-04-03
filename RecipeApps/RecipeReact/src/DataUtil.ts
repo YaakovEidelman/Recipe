@@ -2,7 +2,7 @@ import { FieldValues } from "react-hook-form";
 import { ICuisine, IRecipe, IStaff } from "./Interfaces";
 
 let baseurl = "https://recipeapiye.azurewebsites.net/api/";
-baseurl = "https://localhost:7089/api/";
+//baseurl = "https://localhost:7089/api/";
 
 async function fetchData<T>(url: string): Promise<T> {
     let response = await fetch(baseurl + url);
