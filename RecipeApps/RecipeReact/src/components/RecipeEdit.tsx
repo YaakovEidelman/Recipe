@@ -18,6 +18,7 @@ export function RecipeEdit({ recipe, updateRecipe }: Props) {
     const submitForm = async (data: FieldValues) => {
         
         const r = await postRecipe(data);
+        updateRecipe();
         setErrorMsg(r.errorMessage);
         reset(r);
     }

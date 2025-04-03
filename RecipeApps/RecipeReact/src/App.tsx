@@ -30,13 +30,13 @@ function App() {
     const [cuisineId, setCuisineId] = useState<number | null>(0);
     const [editPage, setEditPage] = useState(false);
     const [recipeForEdit, setRecipeForEdit] = useState<IRecipe>(initRecipe);
-    const [recipedelete, setRecipeDelete] = useState(false);
+    const [RecipeChange, setRecipeChange] = useState(false);
 
     useEffect(() => {
         (async () => {
             setRecipes(await fetchRecipes("recipe/cuisine/" + cuisineId));
         })();
-    }, [cuisineId, recipedelete]);
+    }, [cuisineId, RecipeChange]);
 
     const handleUpdateRecipeForEdit = (recipe: IRecipe) => {
         setEditPage(false);
@@ -52,8 +52,8 @@ function App() {
         setEditPage(isVisible);
     }
 
-    const updateRecipeDelete = () => {
-        setRecipeDelete(!recipedelete);
+    const updateRecipeChange = () => {
+        setRecipeChange(!RecipeChange);
     }
 
     return (
@@ -74,7 +74,7 @@ function App() {
                     <div className="row">
                         {
                             (editPage)
-                                ? <RecipeEdit recipe={recipeForEdit} updateRecipe={updateRecipeDelete}/>
+                                ? <RecipeEdit recipe={recipeForEdit} updateRecipe={updateRecipeChange}/>
                                 : (
                                     <>
                                         <RecipeCount recipes={recipes} />
