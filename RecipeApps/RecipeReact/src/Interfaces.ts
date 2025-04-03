@@ -20,15 +20,6 @@ export interface IRecipe {
     errorMessage: string;
 }
 
-// export interface IRecipe {
-//     recipeId: number;
-//     staffId: number;
-//     cuisineId: number;
-//     recipeName: string;
-//     calories: number;
-//     isVegan: boolean;
-// }
-
 export interface IStaff {
     staffId: number;
     firstName: string;

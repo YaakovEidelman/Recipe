@@ -16,7 +16,7 @@ let initRecipe: IRecipe = {
     recipeStatus: "",
     username: "",
     calories: 0,
-    dateDrafted: new Date().toISOString().split('T')[0],
+    dateDrafted: new Date().toISOString().split("T")[0],
     datePublished: null,
     dateArchived: null,
     recipeImagePath: "",

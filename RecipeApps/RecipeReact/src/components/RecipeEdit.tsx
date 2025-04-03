@@ -16,6 +16,7 @@ export function RecipeEdit({ recipe, updateRecipe }: Props) {
     const [errormsg, setErrorMsg] = useState("");
 
     const submitForm = async (data: FieldValues) => {
+        
         const r = await postRecipe(data);
         setErrorMsg(r.errorMessage);
         reset(r);
@@ -32,7 +33,7 @@ export function RecipeEdit({ recipe, updateRecipe }: Props) {
     const handleDeleteRecipe = async () => {
         const r = await deleteRecipe(recipe.recipeId);
         updateRecipe();
-        r.dateDrafted = new Date().toISOString().split('T')[0]
+        r.dateDrafted = new Date().toISOString().split("T")[0];
         setErrorMsg(r.errorMessage);
         reset(r);
     }
@@ -40,7 +41,6 @@ export function RecipeEdit({ recipe, updateRecipe }: Props) {
 
     return (
         <>
-
             <div className="row">
                 <div className="col-6">
                     <h2 className="text-center mb-4" id="msg">{errormsg}</h2>
