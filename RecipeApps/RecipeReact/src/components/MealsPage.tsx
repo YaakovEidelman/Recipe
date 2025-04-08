@@ -1,7 +1,7 @@
 export function MealsPage() {
     return (
         <>
-            <div>Not Yet Implemented</div>
+            <h1>Coming soon...</h1>
         </>
     )
 }

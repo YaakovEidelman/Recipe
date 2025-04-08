@@ -1,19 +1,21 @@
+import { useNavigate } from "react-router-dom";
 import { ICuisine } from "../Interfaces";
 
 interface Props {
     cuisine: ICuisine;
-    cuisineClick: (num: number) => void;
-    showRecipesClick: (isVisible: boolean) => void;
 }
 
-export function CuisineNavbar({ cuisine, cuisineClick, showRecipesClick }: Props) {
+export function CuisineNavbar({ cuisine }: Props) {
+
+    const nav = useNavigate();
+
     return (
         <>
             <div className="col-lg-3">
                 <div className="card">
                     <button
                         className="btn btn-outline-success text-white p-1"
-                        onClick={() => {cuisineClick(cuisine.cuisineId); showRecipesClick(false)}}
+                        onClick={() => nav("/recipecontent/" + cuisine.cuisineId)}
                         data-bs-toggle="collapse"
                         data-bs-target="#subnavCollapse">
                         <img

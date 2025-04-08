@@ -1,7 +1,7 @@
 export function CookbookPage() {
     return (
         <>
-            <div>Not yet Implemented</div>
+            <h1>Coming soon...</h1>
         </>
     )
 }

@@ -10,7 +10,14 @@ export function RecipeCount({ recipes }: Props) {
         <>
             <div className="row">
                 <div className="col-12">
-                    <h3>{recipes.length === 0 ? "Select a cuisine from the recipe drop downlist" : `${recipes.length} recipes`}</h3>
+                    <h3>
+                        {recipes.length === 0
+                            ? "Choose a Cuisine"
+                            : recipes.length === 1
+                                ? `1 Recipe`
+                                : `${recipes.length} Recipes`
+                        }
+                    </h3>
                 </div>
             </div>
         </>

@@ -1,11 +1,12 @@
+import { useNavigate } from "react-router-dom";
 import { IRecipe } from "../Interfaces";
 
 interface Props {
     recipe: IRecipe;
-    handleRecipeForEdit: (recipe: IRecipe) => void;
 }
 
-function RecipeCard({ recipe, handleRecipeForEdit }: Props) {
+function RecipeCard({ recipe }: Props) {
+    const torecipeedit = useNavigate();
     return (
         <>
             <div className="col-lg-4">
@@ -18,7 +19,7 @@ function RecipeCard({ recipe, handleRecipeForEdit }: Props) {
                     <div className="row p-1">
                         <div className="col">
                             <button
-                                onClick={() => { handleRecipeForEdit(recipe); }}
+                                onClick={() => torecipeedit("/recipeeditpage", { state: { recipe } })}
                                 className="btn btn-outline-primary w-100"
                             >Edit</button>
                         </div>

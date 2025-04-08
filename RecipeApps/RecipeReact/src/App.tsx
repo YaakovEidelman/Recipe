@@ -1,14 +1,13 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import Navbar from "./components/Navbar";
-import RecipeCard from "./components/RecipeCard";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { IRecipe } from "./Interfaces";
-import { fetchRecipes } from "./DataUtil";
-import { RecipeEdit } from "./components/RecipeEdit";
-import { RecipeCount } from "./components/RecipeCount";
+import { ICuisine, IRecipe } from "./Interfaces";
+import { fetchCuisine } from "./DataUtil";
+import { CuisineNavbar } from "./components/CuisineNavbar";
 
-let initRecipe: IRecipe = {
+let recipe: IRecipe = {
     recipeId: 0,
     staffId: 0,
     cuisineId: 0,
@@ -26,64 +25,33 @@ let initRecipe: IRecipe = {
 }
 
 function App() {
-    const [recipes, setRecipes] = useState<IRecipe[]>([]);
-    const [cuisineId, setCuisineId] = useState<number | null>(0);
-    const [editPage, setEditPage] = useState(false);
-    const [recipeForEdit, setRecipeForEdit] = useState<IRecipe>(initRecipe);
-    const [RecipeChange, setRecipeChange] = useState(false);
+
+    const [cuisines, setCuisines] = useState<ICuisine[]>([]);
+
+    const nav = useNavigate();
 
     useEffect(() => {
         (async () => {
-            setRecipes(await fetchRecipes("recipe/cuisine/" + cuisineId));
+            setCuisines(await fetchCuisine());
         })();
-    }, [cuisineId, RecipeChange]);
-
-    const handleUpdateRecipeForEdit = (recipe: IRecipe) => {
-        setEditPage(false);
-        setRecipeForEdit(recipe);
-        setEditPage(true);
-    }
-
-    const handleCuisineClick = (num: number) => {
-        setCuisineId(num);
-    };
-
-    const handleEditPage = (isVisible: boolean) => {
-        setEditPage(isVisible);
-    }
-
-    const updateRecipeChange = () => {
-        setRecipeChange(!RecipeChange);
-    }
+    }, []);
 
     return (
         <>
             <div className="container-fluid">
+                <Navbar />
                 <div className="row">
-                    <div className="col-12">
-                        <Navbar cuisineClick={handleCuisineClick} showRecipesClick={handleEditPage} />
-                    </div>
-                    <div className="row">
-                        <div className="col-4">
-                            <button
-                                onClick={() => handleUpdateRecipeForEdit(initRecipe)}
-                                className="btn btn-outline-success"
-                            >New Recipe</button>
-                        </div>
-                    </div>
-                    <div className="row">
-                        {
-                            (editPage)
-                                ? <RecipeEdit recipe={recipeForEdit} updateRecipe={updateRecipeChange}/>
-                                : (
-                                    <>
-                                        <RecipeCount recipes={recipes} />
-                                        {recipes.map((r, i) => <RecipeCard handleRecipeForEdit={handleUpdateRecipeForEdit} recipe={r} key={i} />)}
-                                    </>
-                                )
-                        }
+                    {cuisines.map((c, i) =>
+                        <CuisineNavbar key={i} cuisine={c}/>
+                    )}
+                </div>
+                <div className="row">
+                    <div className="col">
+                        <button className="btn btn-outline-success mt-3" onClick={() => nav("/recipeeditpage", { state: { recipe } })}>New Recipe</button>
                     </div>
                 </div>
+                <hr />
+                <Outlet />
             </div>
         </>
     );

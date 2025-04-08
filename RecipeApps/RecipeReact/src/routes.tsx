@@ -3,6 +3,7 @@ import App from "./App";
 import RecipeContentPage from "./components/RecipeContentPage";
 import { MealsPage } from "./components/MealsPage";
 import { CookbookPage } from "./components/CookbookPage";
+import RecipeEditPage from "./components/RecipeEditPage";
 
 const routes = createBrowserRouter([
     {
@@ -10,7 +11,7 @@ const routes = createBrowserRouter([
         element: <App />,
         children: [
             {
-                path: "/recipecontent",
+                path: "/recipecontent/:id?",
                 element: <RecipeContentPage />
             },
             {
@@ -20,6 +21,10 @@ const routes = createBrowserRouter([
             {
                 path: "/cookbooks",
                 element: <CookbookPage />
+            },
+            {
+                path: "/recipeeditpage",
+                element: <RecipeEditPage />
             }
         ]
     }
